@@ -26,8 +26,23 @@ provider "azuread" {
 }
 
 provider "kubernetes" {
-  host                   = data.terraform_remote_state.argolab.outputs.host
-  client_certificate     = data.terraform_remote_state.argolab.outputs.client_certificate
-  client_key             = data.terraform_remote_state.argolab.outputs.client_key
-  cluster_ca_certificate = data.terraform_remote_state.argolab.outputs.cluster_ca_certificate
+  host                   = data.terraform_remote_state.argolab.outputs.kube_host
+  client_certificate     = data.terraform_remote_state.argolab.outputs.kube_client_certificate
+  client_key             = data.terraform_remote_state.argolab.outputs.kube_client_key
+  cluster_ca_certificate = data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate
+}
+
+provider "vault" {
+  #address = "https://${data.terraform_remote_state.argolab.outputs.parent_domain}"
+  #token   = data.azurerm_key_vault_secret.global-vault-token[*].value
+  address = "https://vault.${data.terraform_remote_state.argolab.outputs.domain}"
+  token   = local.vault_token
+  alias = "parent"
+  skip_tls_verify = true
+}
+
+provider "vault" {
+  address = "https://vault.${data.terraform_remote_state.argolab.outputs.domain}"
+  token   = local.vault_token
+  skip_tls_verify = true
 }
