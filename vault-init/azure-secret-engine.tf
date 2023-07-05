@@ -2,9 +2,9 @@ module "vault_service_principal_secret_engine" {
 
   source = "github.com/QumulusTechnology/terraform-azure-enterprise-application.git?ref=v1.0.13"
 
-  name                         = "Vault${local.environment}AzureCredentialsEngine"
-  display_name                 = "Vault${local.environment}AzureCredentialsEngine"
-  api_name                     = "Vault${local.environment}AzureCredentialsEngine.${local.domain}"
+  name                         = "Vault${var.environment}AzureCredentialsEngine"
+  display_name                 = "Vault${var.environment}AzureCredentialsEngine"
+  api_name                     = "Vault${var.environment}AzureCredentialsEngine.${var.domain}"
   enterprise                   = "false"
   gallery                      = "false"
   app_role_assignment_required = "true"
@@ -47,7 +47,7 @@ module "vault_service_principal_secret_engine" {
 }
 
 resource "azurerm_role_assignment" "vault_service_principal_secret_engine_subscription_role_assignment" {
-  scope                = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}"
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group_name}"
   role_definition_name = "Owner"
   principal_id         = module.vault_service_principal_secret_engine.service_principal_object_id
 }
@@ -55,8 +55,8 @@ resource "azurerm_role_assignment" "vault_service_principal_secret_engine_subscr
 resource "vault_azure_secret_backend" "this" {
   use_microsoft_graph_api = true
   path                    = "azure"
-  subscription_id         = local.subscription_id
-  tenant_id               = local.tenant_id
+  subscription_id         = var.subscription_id
+  tenant_id               = var.tenant_id
   client_id               = module.vault_service_principal_secret_engine.client_id
   client_secret           = module.vault_service_principal_secret_engine.service_principal_password
   environment             = "AzurePublicCloud"
@@ -70,7 +70,7 @@ resource "vault_azure_secret_backend_role" "this" {
 
   azure_roles {
     role_name = "Owner"
-    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}"
+    scope     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group_name}"
   }
   depends_on = [
     azurerm_role_assignment.vault_service_principal_secret_engine_subscription_role_assignment

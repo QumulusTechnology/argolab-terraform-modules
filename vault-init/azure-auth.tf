@@ -2,9 +2,9 @@ module "vault_service_principal" {
 
   source = "github.com/QumulusTechnology/terraform-azure-enterprise-application.git?ref=v1.0.13"
 
-  name                          = "Vault${local.environment}"
-  display_name                  = "Vault${local.environment}"
-  api_name                      = "Vault${local.environment}.${local.domain}"
+  name                          = "Vault${var.environment}"
+  display_name                  = "Vault${var.environment}"
+  api_name                      = "Vault${var.environment}.${var.domain}"
   enterprise                    = "true"
   gallery                       = "true"
   app_role_assignment_required  = "true"
@@ -41,7 +41,7 @@ module "vault_service_principal" {
       "Group.Read.All",
       "User.Read",
   ] }]
-  redirect_uris = ["http://localhost:8250/oidc/callback", "https://vault.${local.domain}/ui/vault/auth/oidc/oidc/callback"]
+  redirect_uris = ["http://localhost:8250/oidc/callback", "https://vault.${var.domain}/ui/vault/auth/oidc/oidc/callback"]
 }
 
 resource "vault_auth_backend" "this" {
@@ -53,7 +53,7 @@ resource "vault_azure_auth_backend_config" "this" {
   tenant_id     = module.vault_service_principal.tenant_id
   client_id     = module.vault_service_principal.client_id
   client_secret = module.vault_service_principal.service_principal_password
-  resource      = local.vault_url
+  resource      = "https://vault.${var.domain}"
 }
 
 resource "vault_jwt_auth_backend" "this" {
@@ -75,7 +75,7 @@ resource "vault_jwt_auth_backend_role" "azuread-sso" {
   token_policies = ["default"]
   allowed_redirect_uris = [
     "http://localhost:8250/oidc/callback",
-    "${local.vault_url}/ui/vault/auth/oidc/oidc/callback",
+    "https://vault.${var.domain}/ui/vault/auth/oidc/oidc/callback",
     "http://localhost:8200/ui/vault/auth/oidc/oidc/callback"
   ]
   groups_claim = "groups"

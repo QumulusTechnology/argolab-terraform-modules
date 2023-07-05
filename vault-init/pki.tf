@@ -18,8 +18,8 @@ resource "vault_pki_secret_backend_config_urls" "config_urls_root" {
   provider                = vault.parent
   count                   = local.is_prod_or_dev == true ? 1 : 0
   backend                 = vault_mount.pki_root[0].path
-  issuing_certificates    = ["https://vault.${local.domain}/v1/pki-root/ca"]
-  crl_distribution_points = ["https://vault.${local.domain}/v1/pki-root/crl"]
+  issuing_certificates    = ["https://vault.${var.domain}/v1/pki-root/ca"]
+  crl_distribution_points = ["https://vault.${var.domain}/v1/pki-root/crl"]
 }
 
 resource "vault_pki_secret_backend_root_cert" "ca_root" {
@@ -27,7 +27,7 @@ resource "vault_pki_secret_backend_root_cert" "ca_root" {
   count                = local.is_prod_or_dev == true ? 1 : 0
   backend              = vault_mount.pki_root[0].path
   type                 = "internal"
-  common_name          = "Qumulus ${local.environment} Root CA"
+  common_name          = "Qumulus ${var.environment} Root CA"
   ttl                  = "315360000"
   format               = "pem"
   private_key_format   = "der"
@@ -49,7 +49,7 @@ resource "vault_mount" "pki" {
 resource "vault_pki_secret_backend_intermediate_cert_request" "this" {
   backend              = vault_mount.pki.path
   type                 = "internal"
-  common_name          = "Qumulus ${local.environment} Intermediate CA"
+  common_name          = "Qumulus ${var.environment} Intermediate CA"
   format               = "pem"
   private_key_format   = "der"
   key_type             = "rsa"
@@ -63,9 +63,9 @@ resource "vault_pki_secret_backend_root_sign_intermediate" "this" {
   backend              = "pki-root"
   ttl                  = "315360000"
   csr                  = vault_pki_secret_backend_intermediate_cert_request.this.csr
-  common_name          = "Qumulus ${local.environment} Intermediate CA"
+  common_name          = "Qumulus ${var.environment} Intermediate CA"
   exclude_cn_from_sans = true
-  ou                   = local.domain
+  ou                   = var.domain
   organization         = "Qumulus Technlogy Ltd"
   country              = "GB"
   locality             = "Manchester"
@@ -84,8 +84,8 @@ resource "vault_pki_secret_backend_crl_config" "crl_config" {
 
 resource "vault_pki_secret_backend_config_urls" "config_urls" {
   backend                 = vault_mount.pki.path
-  issuing_certificates    = ["https://vault.${local.domain}/v1/pki/ca"]
-  crl_distribution_points = ["https://vault.${local.domain}/v1/pki/crl"]
+  issuing_certificates    = ["https://vault.${var.domain}/v1/pki/ca"]
+  crl_distribution_points = ["https://vault.${var.domain}/v1/pki/crl"]
 }
 
 resource "vault_pki_secret_backend_intermediate_set_signed" "this" {

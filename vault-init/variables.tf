@@ -1,3 +1,14 @@
+variable "environment" {
+  type = string
+}
+variable "environment_short_name" {
+  type = string
+}
+
+variable "full_environmment_name" {
+  type = string
+}
+
 variable "subscription_id" {
   type = string
 }
@@ -6,11 +17,24 @@ variable "tenant_id" {
   type = string
 }
 
-variable "branch_clean" {
+variable "parent_domain" {
   type = string
 }
 
-variable "storage_account_name" {
+variable "domain" {
   type = string
 }
+
+variable "keyvault_name_global" {
+  type = string
+}
+
+variable "keyvault_name_argo" {
+  type = string
+}
+
+variable "resource_group_name" {
+  type = string
+}
+
 

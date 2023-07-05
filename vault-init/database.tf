@@ -7,7 +7,6 @@ resource "vault_database_secrets_mount" "db" {
     password       = data.kubernetes_secret.database_password.data["initialPassword"]
     allowed_roles  = ["harbor", "keycloak"]
   }
-
 }
 
 resource "vault_database_secret_backend_static_role" "harbor" {
