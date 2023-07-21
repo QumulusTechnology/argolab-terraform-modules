@@ -9,6 +9,7 @@ locals {
   keyvault_name_global   = data.terraform_remote_state.argolab.outputs.keyvault_name_global
   keyvault_name_argo     = data.terraform_remote_state.argolab.outputs.keyvault_name_argo
   resource_group_name    = data.terraform_remote_state.argolab.outputs.resource_group_name
+  dns_resource_group     = data.terraform_remote_state.argolab.outputs.dns_resource_group
   vault_token            = data.kubernetes_secret.vault-token.data["token"]
   vault_url              = "https://vault.${local.domain}"
 
