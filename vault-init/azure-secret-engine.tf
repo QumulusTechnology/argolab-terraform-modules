@@ -21,3 +21,4 @@ resource "vault_azure_secret_backend_role" "this" {
     scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}"
   }
 }
+
