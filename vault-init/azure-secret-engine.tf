@@ -21,3 +21,25 @@ resource "vault_azure_secret_backend_role" "this" {
     scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}"
   }
 }
+
+resource "vault_azure_secret_backend_role" "velero" {
+  backend = vault_azure_secret_backend.this.path
+  role    = "velero-role"
+  ttl     = 18000
+  max_ttl = 36000
+
+  azure_roles {
+    role_name = "Contributor"
+    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Storage/storageAccounts/qmlsvelero${local.environment_short_name}"
+  }
+}
+
+resource "vault_policy" "velero" {
+  name = "velero-policy"
+
+  policy = <<EOT
+path "${vault_azure_secret_backend.this.path}/creds/${vault_azure_secret_backend_role.velero.role}" {
+  capabilities = ["read"]
+}
+EOT
+}
