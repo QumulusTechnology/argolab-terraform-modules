@@ -1,8 +1,10 @@
+
+#Long TTL until re resolve multi sources issue on ArgoLab
 resource "vault_azure_secret_backend_role" "velero" {
   backend = vault_azure_secret_backend.this.path
   role    = "velero-azure-access"
-  ttl     = 18000
-  max_ttl = 36000
+  ttl     = "8760h"
+  max_ttl = "8760h"
 
   azure_roles {
     role_name = "Contributor"

@@ -13,12 +13,11 @@ resource "vault_azure_secret_backend" "this" {
 resource "vault_azure_secret_backend_role" "this" {
   backend = vault_azure_secret_backend.this.path
   role    = "azure-admin-role"
-  ttl     = 1800
-  max_ttl = 3600
+  ttl     = "12h"
+  max_ttl = "24h"
 
   azure_roles {
     role_name = "Owner"
     scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}"
   }
 }
-
