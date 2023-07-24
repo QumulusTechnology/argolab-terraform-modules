@@ -10,8 +10,20 @@ terraform {
       version = ">= 2.36.0"
     }
     vault = {
-      source                = "hashicorp/vault"
-      version               = ">= 3.17.0"
+      source  = "hashicorp/vault"
+      version = ">= 3.17.0"
+    }
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = ">= 1.20.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.1.0"
+    }
+    elasticstack = {
+      source  = "elastic/elasticstack"
+      version = ">= 0.6.2"
     }
   }
 }

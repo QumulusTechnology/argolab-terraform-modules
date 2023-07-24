@@ -1,15 +1,15 @@
 variable "global_storage_account_name" {
-  type        = string
+  type = string
 }
 
 variable "subscription_id" {
-  type        = string
+  type = string
 }
 
 variable "tenant_id" {
-  type        = string
+  type = string
 }
 
 variable "terraform_state_backend_key" {
-  type        = string
+  type = string
 }

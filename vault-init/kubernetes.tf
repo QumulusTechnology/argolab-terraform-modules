@@ -3,6 +3,6 @@ resource "vault_auth_backend" "kubernetes" {
 }
 
 resource "vault_kubernetes_auth_backend_config" "this" {
-  backend            = vault_auth_backend.kubernetes.path
-  kubernetes_host    = "https://kubernetes.default.svc"
+  backend         = vault_auth_backend.kubernetes.path
+  kubernetes_host = "https://kubernetes.default.svc"
 }

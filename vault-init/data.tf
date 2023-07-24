@@ -16,7 +16,14 @@ data "azurerm_key_vault_secret" "global-vault-token" {
 data "kubernetes_secret" "database_password" {
   metadata {
     name      = "postgres-auth"
-    namespace = "database"
+    namespace = "postgres"
+  }
+}
+
+data "kubernetes_secret" "elastic_password" {
+  metadata {
+    name      = "elastic-search-es-elastic-user"
+    namespace = "elastic"
   }
 }
 
@@ -81,9 +88,9 @@ data "terraform_remote_state" "argolab" {
 data "external" "vault_init" {
   program = [
     "${path.module}/scripts/wait_for_vault.sh",
-  data.terraform_remote_state.argolab.outputs.kube_host,
-  base64encode(data.terraform_remote_state.argolab.outputs.kube_client_certificate),
-  base64encode(data.terraform_remote_state.argolab.outputs.kube_client_key),
-  base64encode(data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate),
+    data.terraform_remote_state.argolab.outputs.kube_host,
+    base64encode(data.terraform_remote_state.argolab.outputs.kube_client_certificate),
+    base64encode(data.terraform_remote_state.argolab.outputs.kube_client_key),
+    base64encode(data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate),
   ]
 }

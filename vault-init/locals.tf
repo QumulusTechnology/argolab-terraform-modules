@@ -13,6 +13,6 @@ locals {
   vault_token            = data.kubernetes_secret.vault-token.data["token"]
   vault_url              = "https://vault.${local.domain}"
 
-  is_prod_or_dev = local.parent_domain == local.domain ? true : false
+  is_prod_or_dev   = local.parent_domain == local.domain ? true : false
   domain_name_safe = replace(local.domain, ".", "-dot-")
 }

@@ -16,14 +16,33 @@ provider "kubernetes" {
 }
 
 provider "vault" {
-  token   = data.azurerm_key_vault_secret.global-vault-token.value
-  address = "https://vault.${local.parent_domain}"
-  alias = "parent"
+  token           = data.azurerm_key_vault_secret.global-vault-token.value
+  address         = "https://vault.${local.parent_domain}"
+  alias           = "parent"
   skip_tls_verify = true
 }
 
 provider "vault" {
-  address = "http://vault-internal.vault:8200"
-  token   = local.vault_token
+  address         = "http://vault-internal.vault:8200"
+  token           = local.vault_token
   skip_tls_verify = true
+}
+
+provider "postgresql" {
+  host            = "postgres.postgres.svc"
+  port            = 5432
+  database        = "postgres"
+  username        = "postgres"
+  password        = data.kubernetes_secret.database_password.data["initialPassword"]
+  sslmode         = "disable"
+  connect_timeout = 15
+}
+
+provider "elasticstack" {
+  elasticsearch {
+    username  = "elastic"
+    password  = data.kubernetes_secret.elastic_password.data["elastic"]
+    endpoints = ["https://elastic-search-es-http.elastic.svc:9200"]
+    insecure = true
+  }
 }
