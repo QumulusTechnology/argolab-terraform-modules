@@ -31,6 +31,6 @@ resource "vault_kubernetes_auth_backend_role" "velero" {
   role_name                        = "velero-azure-access"
   bound_service_account_names      = ["velero-azure-credentials"]
   bound_service_account_namespaces = ["velero"]
-  token_ttl                        = 3600
+  token_ttl                        = 31622400
   token_policies                   = ["velero-azure-access"]
 }

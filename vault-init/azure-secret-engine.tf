@@ -8,6 +8,7 @@ resource "vault_azure_secret_backend" "this" {
   client_id               = data.kubernetes_secret.azure-session-credentials.data["ARM_CLIENT_ID"]
   client_secret           = data.kubernetes_secret.azure-session-credentials.data["ARM_CLIENT_SECRET"]
   environment             = "AzurePublicCloud"
+
 }
 
 resource "vault_azure_secret_backend_role" "this" {

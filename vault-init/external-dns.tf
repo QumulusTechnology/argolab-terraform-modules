@@ -31,6 +31,6 @@ resource "vault_kubernetes_auth_backend_role" "external-dns" {
   role_name                        = "external-dns-azure-access"
   bound_service_account_names      = ["external-dns-azure-credentials"]
   bound_service_account_namespaces = ["external-dns"]
-  token_ttl                        = 3600
+  token_ttl                        = 31622400
   token_policies                   = ["external-dns-azure-access"]
 }
