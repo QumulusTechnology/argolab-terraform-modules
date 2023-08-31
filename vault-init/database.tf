@@ -36,6 +36,16 @@ resource "vault_database_secrets_mount" "db" {
     password       = random_password.vault_temporal_visibility_password.result
     allowed_roles  = ["*"]
   }
+  postgresql {
+    name              = "qpc"
+    username          = "psqladmin"
+    password          = random_password.qpc_postgres_password.result
+    connection_url    = "postgres://{{username}}:{{password}}@${azurerm_postgresql_flexible_server.qpc.fqdn}:5432/${azurerm_postgresql_flexible_server_database.	qpc.name}?sslmode=require"
+    verify_connection = true
+    allowed_roles = [
+      "${vault_database_secret_backend_role.qpc_postgres.name}",
+    ]
+  }
   elasticsearch {
     name              = "elastic"
     url               = "https://elastic-search-es-http.elastic.svc:9200"
