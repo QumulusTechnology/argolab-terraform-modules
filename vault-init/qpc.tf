@@ -33,7 +33,7 @@ resource "vault_policy" "qpc" {
 path "${vault_azure_secret_backend.this.path}/creds/${vault_azure_secret_backend_role.qpc.role}" {
   capabilities = ["read"]
 }
-path "${vault_database_secrets_mount.db.path}/creds/${vault_database_secret_backend_role.qpc.name}" {
+path "${vault_database_secrets_mount.db.path}/creds/${vault_database_secret_backend_role.qpc_postgres.name}" {
   capabilities = ["read"]
 }
 EOT
