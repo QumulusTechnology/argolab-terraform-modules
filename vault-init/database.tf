@@ -43,7 +43,7 @@ resource "vault_database_secrets_mount" "db" {
     connection_url    = "postgres://{{username}}:{{password}}@${azurerm_postgresql_flexible_server.qpc.fqdn}:5432/${azurerm_postgresql_flexible_server_database.	qpc.name}?sslmode=require"
     verify_connection = true
     allowed_roles = [
-      "${vault_database_secret_backend_role.qpc_postgres.name}",
+      "qpc",
     ]
   }
   elasticsearch {
