@@ -17,12 +17,12 @@ resource "vault_azure_secret_backend_role" "qpc" {
 
   azure_roles {
     role_name = "Contributor"
-    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group.name}/providers/Microsoft.Storage/storageAccounts/qmlsqpclusters${local.environment_short_name}"
+    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Storage/storageAccounts/qmlsqpclusters${local.environment_short_name}"
   }
 
   azure_roles {
     role_name = "Contributor"
-    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group.name}/providers/Microsoft.Storage/storageAccounts/qmlsqpcrsrc${local.environment_short_name}"
+    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Storage/storageAccounts/qmlsqpcrsrc${local.environment_short_name}"
   }
 }
 
@@ -42,7 +42,7 @@ EOT
 #TODO: Consider creating the database within argocd
 
 resource "azurerm_postgresql_flexible_server" "qpc" {
-  name                          = "qpc_postgres_server"
+  name                          = "qpcpostgresserver"
   resource_group_name           = local.resource_group_name
   location                      = local.resource_group_location
   version                       = "14"
@@ -57,7 +57,7 @@ resource "azurerm_postgresql_flexible_server" "qpc" {
 }
 
 resource "azurerm_postgresql_flexible_server_database" "qpc" {
-  name      = "qpc_postgres_db"
+  name      = "qpcpostgresdb"
   server_id = azurerm_postgresql_flexible_server.qpc.id
   collation = "en_US.utf8"
   charset   = "utf8"
