@@ -1,9 +1,3 @@
-resource "random_password" "qpc_postgres_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
-}
-
 resource "vault_azure_secret_backend_role" "qpc" {
   backend = vault_azure_secret_backend.this.path
   role    = "qpc-azure-access"
@@ -37,37 +31,6 @@ path "${vault_database_secrets_mount.db.path}/creds/${vault_database_secret_back
   capabilities = ["read"]
 }
 EOT
-}
-
-#TODO: Consider creating the database within argocd
-
-resource "azurerm_postgresql_flexible_server" "qpc" {
-  name                          = "qpcpostgresserver"
-  resource_group_name           = local.resource_group_name
-  location                      = local.resource_group_location
-  version                       = "14"
-  administrator_login           = "psqladmin"
-  administrator_password        = random_password.qpc_postgres_password.result
-
-  storage_mb = 32768
-
-  sku_name = "B_Standard_B1ms"
-  zone = 2
-
-}
-
-resource "azurerm_postgresql_flexible_server_database" "qpc" {
-  name      = "qpcpostgresdb"
-  server_id = azurerm_postgresql_flexible_server.qpc.id
-  collation = "en_US.utf8"
-  charset   = "utf8"
-}
-
-resource "azurerm_postgresql_flexible_server_firewall_rule" "qpc" {
-  name             = "allow-all"
-  server_id        = azurerm_postgresql_flexible_server.qpc.id
-  start_ip_address = "0.0.0.0"
-  end_ip_address   = "255.255.255.255"
 }
 
 resource "vault_database_secret_backend_role" "qpc_postgres" {

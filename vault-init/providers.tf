@@ -23,7 +23,8 @@ provider "vault" {
 }
 
 provider "vault" {
-  address         = "http://vault-internal.vault:8200"
+#  address         = "http://vault-internal.vault:8200"
+  address         = "https://vault.${local.domain}"
   token           = local.vault_token
   skip_tls_verify = true
 }

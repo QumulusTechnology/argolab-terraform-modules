@@ -13,6 +13,8 @@ locals {
   dns_resource_group      = data.terraform_remote_state.argolab.outputs.dns_resource_group
   vault_token             = data.kubernetes_secret.vault-token.data["token"]
   vault_url               = "https://vault.${local.domain}"
+  qpc_postgresql_fqdn     = data.terraform_remote_state.argolab.outputs.qpc_postgresql_fqdn
+  qpc_postgresql_db_name  = data.terraform_remote_state.argolab.outputs.qpc_postgresql_db_name
 
   is_prod_or_dev   = local.parent_domain == local.domain ? true : false
   domain_name_safe = replace(local.domain, ".", "-dot-")
