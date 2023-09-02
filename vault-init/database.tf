@@ -39,7 +39,7 @@ resource "vault_database_secrets_mount" "db" {
   postgresql {
     name              = "qpc"
     username          = "psqladmin"
-    password          = random_password.qpc_postgres_password.result
+    password          = local.qpc_postgresql_password
     connection_url    = "postgres://{{username}}:{{password}}@${local.qpc_postgresql_fqdn}:5432/${local.qpc_postgresql_db_name}?sslmode=require"
     verify_connection = true
     allowed_roles = [

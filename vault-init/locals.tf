@@ -15,6 +15,7 @@ locals {
   vault_url               = "https://vault.${local.domain}"
   qpc_postgresql_fqdn     = data.terraform_remote_state.argolab.outputs.qpc_postgresql_fqdn
   qpc_postgresql_db_name  = data.terraform_remote_state.argolab.outputs.qpc_postgresql_db_name
+  qpc_postgresql_password = sensitive(data.terraform_remote_state.argolab.outputs.qpc_postgresql_password)
 
   is_prod_or_dev   = local.parent_domain == local.domain ? true : false
   domain_name_safe = replace(local.domain, ".", "-dot-")
