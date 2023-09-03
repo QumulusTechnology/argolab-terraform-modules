@@ -70,6 +70,11 @@ resource "vault_database_secret_backend_role" "temporal_postgres" {
     "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO TEMPORAL;",
     "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO TEMPORAL;",
   ]
+  revocation_statements = [
+    "REASSIGN OWNED BY \"{{name}}\" TO temporal;",  
+    "DROP OWNED BY \"{{name}}\";",
+    "DROP ROLE \"{{name}}\";"
+  ]    
 }
 
 resource "vault_database_secret_backend_role" "temporal_visibility_postgres" {
@@ -87,6 +92,11 @@ resource "vault_database_secret_backend_role" "temporal_visibility_postgres" {
     "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO TEMPORAL;",
     "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO TEMPORAL;",
   ]
+  revocation_statements = [
+    "REASSIGN OWNED BY \"{{name}}\" TO temporal;",  
+    "DROP OWNED BY \"{{name}}\";",
+    "DROP ROLE \"{{name}}\";"
+  ]    
 }
 
 resource "elasticstack_elasticsearch_security_role" "temporal_role" {
