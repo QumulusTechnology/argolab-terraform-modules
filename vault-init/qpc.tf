@@ -36,7 +36,7 @@ EOT
 resource "vault_database_secret_backend_role" "qpc_postgres" {
   backend = vault_database_secrets_mount.db.path
   name    = "qpc"
-  db_name = "qpc_postgres"
+  db_name = "qpc"
   default_ttl = 31536000
   max_ttl     = 31536000
   creation_statements = [
