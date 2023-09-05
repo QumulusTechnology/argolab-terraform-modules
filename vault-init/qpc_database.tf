@@ -10,7 +10,7 @@ resource "postgresql_role" "vault_qpc_role" {
   name             = "qpc"
   login            = true
   create_role      = true
-  superuser        = true
+  superuser        = false
   connection_limit = 5
   password         = random_password.vault_qpc_password.result
 }
@@ -29,7 +29,7 @@ resource "postgresql_default_privileges" "vault_qpc_priv_schema" {
   provider         = postgresql.qpc
 
   database    = resource.postgresql_database.qpc_db.name
-  owner       = "psqlqdmin"
+  owner       = "psqladmin"
   role        = resource.postgresql_role.vault_qpc_role.name
   schema      = "public"
   object_type = "table"
