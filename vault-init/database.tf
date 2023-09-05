@@ -38,12 +38,12 @@ resource "vault_database_secrets_mount" "db" {
   }
   postgresql {
     name              = "qpc"
-    username          = "psqladmin"
-    password          = local.qpc_postgresql_password
+    username          = postgresql_role.vault_qpc_role.name
+    password          = random_password.vault_qpc_password.result
     connection_url    = "postgres://{{username}}:{{password}}@${local.qpc_postgresql_fqdn}:5432/${local.qpc_postgresql_db_name}?sslmode=require"
     verify_connection = true
     allowed_roles = [
-      "qpc",
+      "*",
     ]
   }
   elasticsearch {

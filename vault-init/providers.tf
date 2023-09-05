@@ -39,6 +39,18 @@ provider "postgresql" {
   connect_timeout = 15
 }
 
+provider "postgresql" {
+  alias           = "qpc"
+  host            = "${local.qpc_postgresql_fqdn}"
+  port            = 5432
+  database        = "postgres"
+  username        = "psqladmin"
+  password        = data.kubernetes_secret.qpc_postgresql_admin_password.data["admin_password"]
+  sslmode         = "require"
+  connect_timeout = 30
+  superuser       = false
+}
+
 provider "elasticstack" {
   elasticsearch {
     username  = "elastic"

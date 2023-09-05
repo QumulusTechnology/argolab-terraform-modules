@@ -27,6 +27,13 @@ data "kubernetes_secret" "elastic_password" {
   }
 }
 
+data "kubernetes_secret" "qpc_postgresql_password" {
+  metadata {
+    name      = "postgresql_password"
+    namespace =  "qpc"
+  }
+}
+
 data "vault_identity_group" "vault_admins" {
   group_name = "Vault Admins"
   depends_on = [
