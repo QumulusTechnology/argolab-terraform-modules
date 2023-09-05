@@ -27,7 +27,7 @@ data "kubernetes_secret" "elastic_password" {
   }
 }
 
-data "kubernetes_secret" "qpc_postgresql_password" {
+data "kubernetes_secret" "qpc_postgresql_admin_password" {
   metadata {
     name      = "postgresql-admin-password"
     namespace =  "qpc"

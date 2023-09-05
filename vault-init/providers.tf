@@ -48,7 +48,7 @@ provider "postgresql" {
   password        = data.kubernetes_secret.qpc_postgresql_admin_password.data["admin_password"]
   sslmode         = "require"
   connect_timeout = 30
-  superuser       = false
+  superuser       = true
 }
 
 provider "elasticstack" {
