@@ -53,7 +53,7 @@ resource "vault_database_secret_backend_role" "qpc_postgres" {
 resource "vault_kubernetes_auth_backend_role" "qpc" {
   backend                          = vault_auth_backend.kubernetes.path
   role_name                        = "qpc-database-azure-access"
-  bound_service_account_names      = ["qpc-database-azure-credentials"]
+  bound_service_account_names      = ["qpc-azure-credentials", "qpc-database-credentials"]
   bound_service_account_namespaces = ["qpc"]
   token_ttl                        = 3600
   token_policies                   = ["qpc-database-azure-access"]
