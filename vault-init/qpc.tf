@@ -70,7 +70,7 @@ resource "vault_azure_secret_backend_role" "qpc" {
 
   azure_roles {
     role_name = "Contributor"
-    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Storage/storageAccounts/qmlsqpclusters${local.environment_short_name}"
+    scope     = "/subscriptions/${local.subscription_id}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Storage/storageAccounts/qmlsqpcclusters${local.environment_short_name}"
   }
 
   azure_roles {
