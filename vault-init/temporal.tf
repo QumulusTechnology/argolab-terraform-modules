@@ -72,7 +72,6 @@ resource "vault_database_secret_backend_role" "temporal_postgres" {
   ]
   revocation_statements = [
     "REASSIGN OWNED BY \"{{name}}\" TO temporal;",  
-    "DROP OWNED BY \"{{name}}\";",
     "DROP ROLE \"{{name}}\";"
   ]    
 }
@@ -94,7 +93,6 @@ resource "vault_database_secret_backend_role" "temporal_visibility_postgres" {
   ]
   revocation_statements = [
     "REASSIGN OWNED BY \"{{name}}\" TO temporal;",  
-    "DROP OWNED BY \"{{name}}\";",
     "DROP ROLE \"{{name}}\";"
   ]    
 }
