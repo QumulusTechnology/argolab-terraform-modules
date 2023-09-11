@@ -10,10 +10,26 @@ resource "postgresql_role" "vault_qpc_role" {
   name             = "vaut-qpc-role"
   login            = true
   create_role      = true
-  superuser        = true
+  superuser        = false # impossible for azurerm postgres DB
   connection_limit = 5
   password         = random_password.vault_qpc_password.result
+
+  lifecycle {
+    ignore_changes = [
+      roles,
+    ]
+  }
+
 }
+
+resource "postgresql_grant_role" "grant_qpc_pg_admin" {
+  provider         = postgresql.qpc
+
+  role              = postgresql_role.vault_qpc_role.name
+  grant_role        = "azure_pg_admin"
+  with_admin_option = true
+}
+
 
 resource "postgresql_role" "qpc_role" {
   provider         = postgresql.qpc
