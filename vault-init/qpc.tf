@@ -10,7 +10,7 @@ resource "postgresql_role" "vault_qpc_role" {
   name             = "vaut-qpc-role"
   login            = true
   create_role      = true
-  superuser        = false
+  superuser        = true
   connection_limit = 5
   password         = random_password.vault_qpc_password.result
 }
