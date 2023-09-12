@@ -7,7 +7,7 @@ resource "random_password" "vault_qpc_password" {
 resource "postgresql_role" "vault_qpc_role" {
   provider         = postgresql.qpc
 
-  name             = "vaut-qpc-role"
+  name             = "vault-qpc-role"
   login            = true
   create_role      = true
   superuser        = false # impossible for azurerm postgres DB
@@ -22,7 +22,7 @@ resource "postgresql_role" "vault_qpc_role" {
 
 }
 
-resource "postgresql_grant_role" "grant_qpc_pg_admin" {
+resource "postgresql_grant_role" "grant_vault_qpc_role_pg_admin" {
   provider         = postgresql.qpc
 
   role              = postgresql_role.vault_qpc_role.name
@@ -61,11 +61,12 @@ resource "vault_database_secret_backend_role" "qpc_postgres" {
   creation_statements = [
     "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' INHERIT;",
     "GRANT qpc TO \"{{name}}\";",
-    "GRANT ALL ON DATABASE QPC TO QPC;",
-    "GRANT ALL PRIVILEGES ON SCHEMA PUBLIC TO QPC;",
-    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO QPC;",
-    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO QPC;",
-    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO QPC;",
+    "GRANT \"{{name}}\" TO \"vault-qpc-role\";",
+    "GRANT ALL ON DATABASE qpc TO qpc;",
+    "GRANT ALL PRIVILEGES ON SCHEMA public TO qpc;",
+    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO qpc;",
+    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO qpc;",
+    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO qpc;",
   ]
   revocation_statements = [
     "REASSIGN OWNED BY \"{{name}}\" TO qpc;",  
