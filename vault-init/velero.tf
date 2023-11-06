@@ -3,8 +3,8 @@
 resource "vault_azure_secret_backend_role" "velero" {
   backend = vault_azure_secret_backend.this.path
   role    = "velero-azure-access"
-  ttl     = "8760h"
-  max_ttl = "8760h"
+  ttl     = "31536000"
+  max_ttl = "31536000"
 
   azure_roles {
     role_name = "Contributor"
@@ -31,6 +31,6 @@ resource "vault_kubernetes_auth_backend_role" "velero" {
   role_name                        = "velero-azure-access"
   bound_service_account_names      = ["velero-azure-credentials"]
   bound_service_account_namespaces = ["velero"]
-  token_ttl                        = 31622400
+  token_ttl                        = 31536000
   token_policies                   = ["velero-azure-access"]
 }

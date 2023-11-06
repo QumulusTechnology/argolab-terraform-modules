@@ -1,8 +1,8 @@
 resource "vault_pki_secret_backend_role" "vault_pki_secret_backend_role_cert_manager" {
   backend          = vault_mount.pki.path
   name             = "cert-manager"
-  ttl              = 3600
-  max_ttl          = "259200"
+  ttl              = 31536000
+  max_ttl          = 31536000
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 2048
@@ -26,6 +26,6 @@ resource "vault_kubernetes_auth_backend_role" "this" {
   role_name                        = "cert-manager"
   bound_service_account_names      = ["vault-cert"]
   bound_service_account_namespaces = ["cert-manager"]
-  token_ttl                        = 3600
+  token_ttl                        = 31536000
   token_policies                   = ["pki-cert-manager"]
 }

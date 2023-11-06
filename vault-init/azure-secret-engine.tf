@@ -14,8 +14,8 @@ resource "vault_azure_secret_backend" "this" {
 resource "vault_azure_secret_backend_role" "this" {
   backend = vault_azure_secret_backend.this.path
   role    = "azure-admin-role"
-  ttl     = "12h"
-  max_ttl = "24h"
+  ttl     = "31536000"
+  max_ttl = "31536000"
 
   azure_roles {
     role_name = "Owner"

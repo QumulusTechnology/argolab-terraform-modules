@@ -33,7 +33,7 @@ provider "postgresql" {
   port            = 5432
   database        = "postgres"
   username        = "postgres"
-  password        = data.kubernetes_secret.database_password.data["initialPassword"]
+  password        = data.kubernetes_secret.database_password.data["password"]
   sslmode         = "disable"
   connect_timeout = 15
 }
@@ -43,6 +43,6 @@ provider "elasticstack" {
     username  = "elastic"
     password  = data.kubernetes_secret.elastic_password.data["elastic"]
     endpoints = ["https://elastic-search-es-http.elastic.svc:9200"]
-    insecure = true
+    insecure  = true
   }
 }
