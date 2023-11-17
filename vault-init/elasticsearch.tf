@@ -4,9 +4,8 @@ resource "elasticstack_elasticsearch_security_role" "vault_management_role" {
 }
 
 resource "random_password" "vault_elasticsearch_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
+  length           = 36
+  special          = false
 }
 
 resource "elasticstack_elasticsearch_security_user" "vault_user" {

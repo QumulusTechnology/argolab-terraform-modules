@@ -1,7 +1,6 @@
 resource "random_password" "vault_postgres_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
+  length           = 36
+  special          = false
 }
 
 resource "postgresql_role" "vault_postgres_role" {

@@ -24,7 +24,7 @@ provider "vault" {
 
 provider "vault" {
   address         = "http://vault-internal.vault:8200"
-  token           = local.vault_token
+  token           = var.vault_token
   skip_tls_verify = true
 }
 

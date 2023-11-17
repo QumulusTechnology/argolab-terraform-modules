@@ -1,9 +1,9 @@
 # ### Temporary override until we resolve external secrets recycling
 
 # resource "random_password" "temporal_temp_password" {
-#   length           = 24
-#   special          = true
-#   override_special = "!@#%^&*()_-+={}[]"
+#   length           =  36
+#   special          = false
+#   
 # }
 
 # resource "postgresql_role" "temporal_temp_role" {
@@ -28,9 +28,9 @@
 # }
 
 # resource "random_password" "harbor_temp_password" {
-#   length           = 24
-#   special          = true
-#   override_special = "!@#%^&*()_-+={}[]"
+#   length           =  36
+#   special          = false
+#
 # }
 
 # resource "postgresql_role" "harbor_temp_role" {
@@ -56,9 +56,9 @@
 
 
 # resource "random_password" "semaphore_temp_password" {
-#   length           = 24
-#   special          = true
-#   override_special = "!@#%^&*()_-+={}[]"
+#   length           =  36
+#   special          = false
+#
 # }
 
 # resource "postgresql_role" "semaphore_temp_role" {
@@ -83,9 +83,9 @@
 # }
 
 # resource "random_password" "keycloak_temp_password" {
-#   length           = 24
-#   special          = true
-#   override_special = "!@#%^&*()_-+={}[]"
+#   length           =  36
+#   special          = false
+#
 # }
 
 # resource "postgresql_role" "keycloak_temp_role" {

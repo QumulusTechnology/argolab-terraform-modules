@@ -10,7 +10,6 @@ locals {
   keyvault_name_argo     = data.terraform_remote_state.argolab.outputs.keyvault_name_argo
   resource_group_name    = data.terraform_remote_state.argolab.outputs.resource_group_name
   dns_resource_group     = data.terraform_remote_state.argolab.outputs.dns_resource_group
-  vault_token            = data.kubernetes_secret.vault-token.data["token"]
   vault_url              = "https://vault.${local.domain}"
 
   is_prod_or_dev   = local.parent_domain == local.domain ? true : false

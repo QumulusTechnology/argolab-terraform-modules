@@ -1,13 +1,11 @@
 resource "random_password" "vault_temporal_password" {
-  length           = 24
+  length           = 36
   special          = true
-  override_special = "!@#%^&*()_-+={}[]"
 }
 
 resource "random_password" "vault_temporal_visibility_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
+  length           = 36
+  special          = false
 }
 
 resource "postgresql_role" "vault_temporal_role" {

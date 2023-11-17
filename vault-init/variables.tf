@@ -13,3 +13,11 @@ variable "tenant_id" {
 variable "terraform_state_backend_key" {
   type = string
 }
+
+variable "vault_token" {
+  type = string
+}
+
+variable "vault_init_response" {
+  type = string
+}

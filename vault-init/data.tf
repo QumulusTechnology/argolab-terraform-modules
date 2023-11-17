@@ -47,17 +47,6 @@ data "vault_identity_group" "devops" {
     module.vault_azure_ad_groups
   ]
 }
-
-data "kubernetes_secret" "vault-token" {
-  metadata {
-    name      = "vault-init-token"
-    namespace = "vault"
-  }
-  depends_on = [
-    data.external.vault_init
-  ]
-}
-
 data "kubernetes_secret" "azure-session-credentials" {
   metadata {
     name      = "azure-session-credentials"

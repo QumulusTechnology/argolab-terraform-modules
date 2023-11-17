@@ -1,7 +1,6 @@
 resource "random_password" "vault_semaphore_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
+  length           = 36
+  special          = false
 }
 
 resource "postgresql_role" "vault_semaphore_role" {
@@ -55,7 +54,6 @@ resource "vault_database_secret_backend_role" "semaphore_postgres" {
   ]
 }
 
-
 resource "vault_policy" "semaphore_database_access" {
   name   = "semaphore-database-access"
   policy = <<EOT
@@ -84,7 +82,6 @@ resource "vault_azure_secret_backend_role" "semaphore" {
     group_name = "Semaphore Access"
   }
 }
-
 
 resource "vault_policy" "semaphore" {
   name = "semaphore-azure-access"

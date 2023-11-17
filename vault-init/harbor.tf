@@ -1,7 +1,6 @@
 resource "random_password" "vault_harbor_password" {
-  length           = 24
-  special          = true
-  override_special = "!@#%^&*()_-+={}[]"
+  length           = 36
+  special          = false
 }
 
 resource "postgresql_role" "vault_harbor_role" {
