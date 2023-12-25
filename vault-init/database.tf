@@ -1,6 +1,6 @@
 resource "random_password" "vault_postgres_password" {
-  length           = 36
-  special          = false
+  length  = 36
+  special = false
 }
 
 resource "postgresql_role" "vault_postgres_role" {
@@ -40,6 +40,15 @@ resource "vault_database_secrets_mount" "db" {
     password       = random_password.vault_keycloak_password.result
     allowed_roles  = ["*"]
   }
+
+  postgresql {
+    name           = postgresql_database.nextcloud.name
+    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.nextcloud.name}"
+    username       = postgresql_role.vault_nextcloud_role.name
+    password       = random_password.vault_nextcloud_password.result
+    allowed_roles  = ["*"]
+  }
+
 
   postgresql {
     name           = "postgres"

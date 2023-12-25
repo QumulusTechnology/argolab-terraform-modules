@@ -4,8 +4,8 @@ resource "elasticstack_elasticsearch_security_role" "vault_management_role" {
 }
 
 resource "random_password" "vault_elasticsearch_password" {
-  length           = 36
-  special          = false
+  length  = 36
+  special = false
 }
 
 resource "elasticstack_elasticsearch_security_user" "vault_user" {

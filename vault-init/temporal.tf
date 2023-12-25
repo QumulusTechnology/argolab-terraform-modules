@@ -1,11 +1,11 @@
 resource "random_password" "vault_temporal_password" {
-  length           = 36
-  special          = true
+  length  = 36
+  special = true
 }
 
 resource "random_password" "vault_temporal_visibility_password" {
-  length           = 36
-  special          = false
+  length  = 36
+  special = false
 }
 
 resource "postgresql_role" "vault_temporal_role" {

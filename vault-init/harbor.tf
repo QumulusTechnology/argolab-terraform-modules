@@ -1,6 +1,6 @@
 resource "random_password" "vault_harbor_password" {
-  length           = 36
-  special          = false
+  length  = 36
+  special = false
 }
 
 resource "postgresql_role" "vault_harbor_role" {
