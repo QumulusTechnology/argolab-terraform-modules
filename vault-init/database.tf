@@ -42,15 +42,6 @@ resource "vault_database_secrets_mount" "db" {
   }
 
   postgresql {
-    name           = postgresql_database.nextcloud.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.nextcloud.name}"
-    username       = postgresql_role.vault_nextcloud_role.name
-    password       = random_password.vault_nextcloud_password.result
-    allowed_roles  = ["*"]
-  }
-
-
-  postgresql {
     name           = "postgres"
     connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/postgres"
     username       = postgresql_role.vault_postgres_role.name
