@@ -47,12 +47,6 @@ data "vault_identity_group" "devops" {
     module.vault_azure_ad_groups
   ]
 }
-data "kubernetes_secret" "azure-session-credentials" {
-  metadata {
-    name      = "azure-session-credentials"
-    namespace = "terraform-operator"
-  }
-}
 
 data "kubernetes_secret" "azure-sso-credentials" {
   metadata {
