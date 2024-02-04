@@ -15,6 +15,8 @@ resource "postgresql_role" "vault_postgres_role" {
 resource "vault_database_secrets_mount" "db" {
   path = "database"
 
+
+  ### Note these should be in alphabetical order to prevent terraform from trying to reorder the databases by each apply
   elasticsearch {
     name              = "elastic"
     url               = "https://elastic-search-es-http.elastic.svc:9200"
@@ -50,6 +52,14 @@ resource "vault_database_secrets_mount" "db" {
   }
 
   postgresql {
+    name           = postgresql_database.pwpush.name
+    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.pwpush.name}"
+    username       = postgresql_role.vault_pwpush_role.name
+    password       = random_password.vault_pwpush_password.result
+    allowed_roles  = ["*"]
+  }
+
+  postgresql {
     name           = postgresql_database.semaphore.name
     connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.semaphore.name}"
     username       = postgresql_role.vault_semaphore_role.name
@@ -70,5 +80,7 @@ resource "vault_database_secrets_mount" "db" {
     password       = random_password.vault_temporal_visibility_password.result
     allowed_roles  = ["*"]
   }
+
+
 
 }
