@@ -11,6 +11,8 @@ locals {
   resource_group_name    = data.terraform_remote_state.argolab.outputs.resource_group_name
   dns_resource_group     = data.terraform_remote_state.argolab.outputs.dns_resource_group
   vault_url              = "https://vault.${local.domain}"
+  cert_manager_allowed_domains_base  = [ local.domain, "svc.cluster.local"]
+  cert_manager_allowed_domains = local.environment_short_name == "prod" ? concat(local.cert_manager_allowed_domains_base, [var.cloud_portal_domain_prod]) : local.environment_short_name == "dev" ? concat(local.cert_manager_allowed_domains_base, [var.cloud_portal_domain_dev]) : local.cert_manager_allowed_domains_base
 
   is_prod_or_dev   = local.parent_domain == local.domain ? true : false
   domain_name_safe = replace(local.domain, ".", "-dot-")

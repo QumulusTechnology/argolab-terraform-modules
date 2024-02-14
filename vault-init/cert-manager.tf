@@ -6,7 +6,7 @@ resource "vault_pki_secret_backend_role" "vault_pki_secret_backend_role_cert_man
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 2048
-  allowed_domains  = ["${local.domain}", "svc.cluster.local"]
+  allowed_domains  = local.cert_manager_allowed_domains
   allow_subdomains = true
   require_cn       = false
 }
