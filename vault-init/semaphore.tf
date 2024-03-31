@@ -1,41 +1,6 @@
-resource "random_password" "vault_semaphore_password" {
-  length  = 36
-  special = false
-}
-
-resource "postgresql_role" "vault_semaphore_role" {
-  name             = "vault-semaphore-user"
-  login            = true
-  create_role      = true
-  superuser        = true
-  connection_limit = 5
-  password         = random_password.vault_semaphore_password.result
-}
-
-resource "postgresql_role" "semaphore_role" {
-  name             = "semaphore"
-  login            = false
-  superuser        = false
-  create_role      = false
-  connection_limit = 20
-  lifecycle {
-    ignore_changes = [password]
-  }
-}
-
-resource "postgresql_database" "semaphore" {
-  name              = "semaphore"
-  owner             = postgresql_role.semaphore_role.name
-  template          = "template0"
-  lc_collate        = "en_US.UTF-8"
-  lc_ctype          = "en_US.UTF-8"
-  connection_limit  = -1
-  allow_connections = true
-}
-
 resource "vault_database_secret_backend_role" "semaphore_postgres" {
   backend     = vault_database_secrets_mount.db.path
-  db_name     = postgresql_database.semaphore.name
+  db_name     = "semaphore"
   name        = "semaphore"
   default_ttl = 31536000
   max_ttl     = 31536000

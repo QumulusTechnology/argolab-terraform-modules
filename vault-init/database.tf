@@ -1,20 +1,5 @@
-resource "random_password" "vault_postgres_password" {
-  length  = 36
-  special = false
-}
-
-resource "postgresql_role" "vault_postgres_role" {
-  name             = "vault-postgres-user"
-  login            = true
-  create_role      = true
-  superuser        = true
-  connection_limit = 5
-  password         = random_password.vault_postgres_password.result
-}
-
 resource "vault_database_secrets_mount" "db" {
   path = "database"
-
 
   ### Note these should be in alphabetical order to prevent terraform from trying to reorder the databases by each apply
   elasticsearch {
@@ -28,59 +13,51 @@ resource "vault_database_secrets_mount" "db" {
   }
 
   postgresql {
-    name           = postgresql_database.harbor.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.harbor.name}"
-    username       = postgresql_role.vault_harbor_role.name
-    password       = random_password.vault_harbor_password.result
+    name           = "harbor"
+    connection_url = "postgres://{{username}}:{{password}}@harbor-db-rw.harbor.svc:5432/harbor"
+    username       = data.kubernetes_secret.harbor_postgres_password.data["username"]
+    password       = data.kubernetes_secret.harbor_postgres_password.data["password"]
+    allowed_roles  = ["*"]
+  }
+
+  # postgresql {
+  #   name           = "kamaji"
+  #   connection_url = "postgres://{{username}}:{{password}}@kamaji-db-rw.kamaji-system.svc:5432/kamaji"
+  #   username       = data.kubernetes_secret.kamaji_postgres_password.data["username"]
+  #   password       = data.kubernetes_secret.kamaji_postgres_password.data["password"]
+  #   allowed_roles  = ["*"]
+  # }
+
+  postgresql {
+    name           = "keycloak"
+    connection_url = "postgres://{{username}}:{{password}}@keycloak-db-rw.keycloak.svc:5432/keycloak"
+    username       = data.kubernetes_secret.keycloak_postgres_password.data["username"]
+    password       = data.kubernetes_secret.keycloak_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 
   postgresql {
-    name           = postgresql_database.keycloak.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.keycloak.name}"
-    username       = postgresql_role.vault_keycloak_role.name
-    password       = random_password.vault_keycloak_password.result
+    name           = "pwpush"
+    connection_url = "postgres://{{username}}:{{password}}@pwpush-db-rw.pwpush.svc:5432/pwpush"
+    username       = data.kubernetes_secret.pwpush_postgres_password.data["username"]
+    password       = data.kubernetes_secret.pwpush_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 
   postgresql {
-    name           = "postgres"
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/postgres"
-    username       = postgresql_role.vault_postgres_role.name
-    password       = random_password.vault_postgres_password.result
+    name           = "semaphore"
+    connection_url = "postgres://{{username}}:{{password}}@semaphore-db-rw.semaphore.svc:5432/semaphore"
+    username       = data.kubernetes_secret.semaphore_postgres_password.data["username"]
+    password       = data.kubernetes_secret.semaphore_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 
   postgresql {
-    name           = postgresql_database.pwpush.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.pwpush.name}"
-    username       = postgresql_role.vault_pwpush_role.name
-    password       = random_password.vault_pwpush_password.result
+    name           = "temporal"
+    connection_url = "postgres://{{username}}:{{password}}@temporal-db-rw.temporal.svc:5432/temporal"
+    username       = data.kubernetes_secret.temporal_postgres_password.data["username"]
+    password       = data.kubernetes_secret.temporal_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
-
-  postgresql {
-    name           = postgresql_database.semaphore.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.semaphore.name}"
-    username       = postgresql_role.vault_semaphore_role.name
-    password       = random_password.vault_semaphore_password.result
-    allowed_roles  = ["*"]
-  }
-  postgresql {
-    name           = postgresql_database.temporal.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.temporal.name}"
-    username       = postgresql_role.vault_temporal_role.name
-    password       = random_password.vault_temporal_password.result
-    allowed_roles  = ["*"]
-  }
-  postgresql {
-    name           = postgresql_database.temporal_visibility.name
-    connection_url = "postgres://{{username}}:{{password}}@postgres.postgres.svc:5432/${postgresql_database.temporal_visibility.name}"
-    username       = postgresql_role.vault_temporal_visibility_role.name
-    password       = random_password.vault_temporal_visibility_password.result
-    allowed_roles  = ["*"]
-  }
-
-
 
 }

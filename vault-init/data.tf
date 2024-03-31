@@ -13,10 +13,45 @@ data "azurerm_key_vault_secret" "global-vault-token" {
   key_vault_id = data.azurerm_key_vault.global.id
 }
 
-data "kubernetes_secret" "database_password" {
+data "kubernetes_secret" "harbor_postgres_password" {
   metadata {
-    name      = "postgres-auth"
-    namespace = "postgres"
+    name      = "harbor-db-superuser"
+    namespace = "harbor"
+  }
+}
+
+data "kubernetes_secret" "kamaji_postgres_password" {
+  metadata {
+    name      = "kamaji-db-superuser"
+    namespace = "kamaji-system"
+  }
+}
+
+data "kubernetes_secret" "keycloak_postgres_password" {
+  metadata {
+    name      = "keycloak-db-superuser"
+    namespace = "keycloak"
+  }
+}
+
+data "kubernetes_secret" "pwpush_postgres_password" {
+  metadata {
+    name      = "pwpush-db-superuser"
+    namespace = "pwpush"
+  }
+}
+
+data "kubernetes_secret" "semaphore_postgres_password" {
+  metadata {
+    name      = "semaphore-db-superuser"
+    namespace = "semaphore"
+  }
+}
+
+data "kubernetes_secret" "temporal_postgres_password" {
+  metadata {
+    name      = "temporal-db-superuser"
+    namespace = "temporal"
   }
 }
 

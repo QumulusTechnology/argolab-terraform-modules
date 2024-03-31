@@ -28,15 +28,6 @@ provider "vault" {
   skip_tls_verify = true
 }
 
-provider "postgresql" {
-  host            = "postgres.postgres.svc"
-  port            = 5432
-  database        = "postgres"
-  username        = "postgres"
-  password        = data.kubernetes_secret.database_password.data["password"]
-  sslmode         = "disable"
-  connect_timeout = 15
-}
 
 provider "elasticstack" {
   elasticsearch {

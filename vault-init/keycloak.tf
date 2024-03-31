@@ -1,40 +1,8 @@
-resource "random_password" "vault_keycloak_password" {
-  length  = 36
-  special = false
-}
 
-resource "postgresql_role" "vault_keycloak_role" {
-  name             = "vault-keycloak-user"
-  login            = true
-  create_role      = true
-  superuser        = true
-  connection_limit = 5
-  password         = random_password.vault_keycloak_password.result
-}
-
-resource "postgresql_role" "keycloak_role" {
-  name             = "keycloak"
-  login            = true
-  create_role      = false
-  superuser        = false
-  connection_limit = 10
-  lifecycle {
-    ignore_changes = [password]
-  }
-}
-resource "postgresql_database" "keycloak" {
-  name              = "keycloak"
-  owner             = postgresql_role.keycloak_role.name
-  template          = "template0"
-  lc_collate        = "en_US.UTF-8"
-  lc_ctype          = "en_US.UTF-8"
-  connection_limit  = -1
-  allow_connections = true
-}
 
 resource "vault_database_secret_backend_role" "keycloak_postgres" {
   backend     = vault_database_secrets_mount.db.path
-  db_name     = postgresql_database.keycloak.name
+  db_name     = "keycloak"
   name        = "keycloak"
   default_ttl = 31536000
   max_ttl     = 31536000
