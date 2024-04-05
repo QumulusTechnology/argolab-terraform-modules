@@ -22,7 +22,7 @@ resource "vault_database_secrets_mount" "db" {
 
   # postgresql {
   #   name           = "kamaji"
-  #   connection_url = "postgres://{{username}}:{{password}}@kamaji-db-rw.kamaji-system.svc:5432/kamaji"
+  #   connection_url = "postgres://{{username}}:{{password}}@kamaji-db-rw.kamaji.svc:5432/kamaji"
   #   username       = data.kubernetes_secret.kamaji_postgres_password.data["username"]
   #   password       = data.kubernetes_secret.kamaji_postgres_password.data["password"]
   #   allowed_roles  = ["*"]
@@ -33,6 +33,14 @@ resource "vault_database_secrets_mount" "db" {
     connection_url = "postgres://{{username}}:{{password}}@keycloak-db-rw.keycloak.svc:5432/keycloak"
     username       = data.kubernetes_secret.keycloak_postgres_password.data["username"]
     password       = data.kubernetes_secret.keycloak_postgres_password.data["password"]
+    allowed_roles  = ["*"]
+  }
+
+  postgresql {
+    name           = "nexus"
+    connection_url = "postgres://{{username}}:{{password}}@nexus-db-rw.nexus.svc:5432/nexus"
+    username       = data.kubernetes_secret.nexus_postgres_password.data["username"]
+    password       = data.kubernetes_secret.nexus_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 

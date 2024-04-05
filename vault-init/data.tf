@@ -23,7 +23,7 @@ data "kubernetes_secret" "harbor_postgres_password" {
 data "kubernetes_secret" "kamaji_postgres_password" {
   metadata {
     name      = "kamaji-db-superuser"
-    namespace = "kamaji-system"
+    namespace = "kamaji"
   }
 }
 
@@ -31,6 +31,13 @@ data "kubernetes_secret" "keycloak_postgres_password" {
   metadata {
     name      = "keycloak-db-superuser"
     namespace = "keycloak"
+  }
+}
+
+data "kubernetes_secret" "nexus_postgres_password" {
+  metadata {
+    name      = "nexus-db-superuser"
+    namespace = "nexus"
   }
 }
 
