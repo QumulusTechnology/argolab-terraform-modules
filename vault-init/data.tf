@@ -97,19 +97,18 @@ data "kubernetes_secret" "azure-sso-credentials" {
   }
 }
 
-#Change to AWS
-# data "terraform_remote_state" "argolab" {
-#   backend = "azurerm"
-#   config = {
-#     resource_group_name  = "global"
-#     storage_account_name = "${var.global_storage_account_name}"
-#     container_name       = "tfstate"
-#     key                  = "${var.terraform_state_backend_key}/argolab"
-#     subscription_id      = "${var.subscription_id}"
-#     tenant_id            = "${var.tenant_id}"
-#     use_oidc             = true
-#   }
-# }
+data "terraform_remote_state" "argolab" {
+  backend = "azurerm"
+  config = {
+    resource_group_name  = "global"
+    storage_account_name = "${var.global_storage_account_name}"
+    container_name       = "tfstate"
+    key                  = "${var.terraform_state_backend_key}/argolab"
+    subscription_id      = "${var.subscription_id}"
+    tenant_id            = "${var.tenant_id}"
+    use_oidc             = true
+  }
+}
 
 data "external" "vault_init" {
   program = [
