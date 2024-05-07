@@ -4,6 +4,10 @@ provider "azurerm" {
   features {}
 }
 
+provider "aws" {
+  region     = "eu-west-1"
+}
+
 provider "azuread" {
   tenant_id = local.tenant_id
 }

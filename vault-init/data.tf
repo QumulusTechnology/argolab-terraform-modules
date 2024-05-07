@@ -98,15 +98,11 @@ data "kubernetes_secret" "azure-sso-credentials" {
 }
 
 data "terraform_remote_state" "argolab" {
-  backend = "azurerm"
+  backend = "s3"
   config = {
-    resource_group_name  = "global"
-    storage_account_name = "${var.global_storage_account_name}"
-    container_name       = "tfstate"
-    key                  = "${var.terraform_state_backend_key}/argolab"
-    subscription_id      = "${var.subscription_id}"
-    tenant_id            = "${var.tenant_id}"
-    use_oidc             = true
+    bucket  = "qumulusglobaldevtest" #Make this dynamic
+    key     = "refactor/argolab" #Make this dynamic
+    region  = "eu-west-2" #Make this dynamic
   }
 }
 
