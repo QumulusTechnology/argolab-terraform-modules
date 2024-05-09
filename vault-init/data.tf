@@ -1,12 +1,12 @@
-data "azurerm_key_vault" "global" {
-  name                = local.keyvault_name_global
-  resource_group_name = "global"
-}
+# data "azurerm_key_vault" "global" {
+#   name                = local.keyvault_name_global
+#   resource_group_name = "global"
+# }
 
-data "azurerm_key_vault" "argo" {
-  name                = local.keyvault_name_argo
-  resource_group_name = local.resource_group_name
-}
+# data "azurerm_key_vault" "argo" {
+#   name                = local.keyvault_name_argo
+#   resource_group_name = local.resource_group_name
+# }
 
 data "azurerm_key_vault_secret" "global-vault-token" {
   name         = "vault-token"
@@ -69,33 +69,33 @@ data "kubernetes_secret" "elastic_password" {
   }
 }
 
-data "vault_identity_group" "vault_admins" {
-  group_name = "Vault Admins"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
+# data "vault_identity_group" "vault_admins" {
+#   group_name = "Vault Admins"
+#   depends_on = [
+#     module.vault_azure_ad_groups
+#   ]
+# }
 
-data "vault_identity_group" "engineering" {
-  group_name = "Engineering"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
+# data "vault_identity_group" "engineering" {
+#   group_name = "Engineering"
+#   depends_on = [
+#     module.vault_azure_ad_groups
+#   ]
+# }
 
-data "vault_identity_group" "devops" {
-  group_name = "DevOps"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
+# data "vault_identity_group" "devops" {
+#   group_name = "DevOps"
+#   depends_on = [
+#     module.vault_azure_ad_groups
+#   ]
+# }
 
-data "kubernetes_secret" "azure-sso-credentials" {
-  metadata {
-    name      = "azure-sso-credentials"
-    namespace = "vault"
-  }
-}
+# data "kubernetes_secret" "azure-sso-credentials" {
+#   metadata {
+#     name      = "azure-sso-credentials"
+#     namespace = "vault"
+#   }
+# }
 
 data "terraform_remote_state" "argolab" {
   backend = "s3"
