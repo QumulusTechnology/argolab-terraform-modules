@@ -1,8 +1,8 @@
-provider "azurerm" {
-  subscription_id = local.subscription_id
-  tenant_id       = local.tenant_id
-  features {}
-}
+# provider "azurerm" {
+#   subscription_id = local.subscription_id
+#   tenant_id       = local.tenant_id
+#   features {}
+# }
 
 provider "aws" {
   region     = "eu-west-1"
