@@ -1,16 +1,16 @@
-provider "azurerm" {
-  subscription_id = local.subscription_id
-  tenant_id       = local.tenant_id
-  features {}
-}
+# provider "azurerm" {
+#   subscription_id = local.subscription_id
+#   tenant_id       = local.tenant_id
+#   features {}
+# }
 
 provider "aws" {
   region     = "eu-west-1"
 }
 
-provider "azuread" {
-  tenant_id = local.tenant_id
-}
+# provider "azuread" {
+#   tenant_id = local.tenant_id
+# }
 
 provider "kubernetes" {
   host                   = data.terraform_remote_state.argolab.outputs.kube_host
