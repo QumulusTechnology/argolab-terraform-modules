@@ -8,8 +8,11 @@
 #   resource_group_name = local.resource_group_name
 # }
 
-data "aws_secretsmanager_secret" "global-vault-token" {
+data "aws_secretsmanager_secret" "global_vault_token_secret" {
   name = "/dev/global/vault-token"
+}
+data "aws_secretsmanager_secret_version" "global_vault_token_secret_string" {
+  secret_id     = data.aws_secretsmanager_secret.global_vault_token_secret.id
 }
 
 data "kubernetes_secret" "harbor_postgres_password" {
