@@ -19,12 +19,12 @@ provider "kubernetes" {
   cluster_ca_certificate = data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate
 }
 
-# provider "vault" {
-#   token           = data.azurerm_key_vault_secret.global-vault-token.value
-#   address         = "https://vault.${local.parent_domain}"
-#   alias           = "parent"
-#   skip_tls_verify = true
-# }
+provider "vault" {
+  token           = data.aws_secretsmanager_secret.global-vault-token.secret_string
+  address         = "https://vault.${local.parent_domain}"
+  alias           = "parent"
+  skip_tls_verify = true
+}
 
 provider "vault" {
   address         = "http://vault-internal.vault:8200"

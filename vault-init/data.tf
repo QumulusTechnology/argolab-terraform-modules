@@ -8,10 +8,9 @@
 #   resource_group_name = local.resource_group_name
 # }
 
-# data "azurerm_key_vault_secret" "global-vault-token" {
-#   name         = "vault-token"
-#   key_vault_id = data.azurerm_key_vault.global.id
-# }
+data "aws_secretsmanager_secret" "global-vault-token" {
+  name = "/dev/global/vault-token"
+}
 
 data "kubernetes_secret" "harbor_postgres_password" {
   metadata {

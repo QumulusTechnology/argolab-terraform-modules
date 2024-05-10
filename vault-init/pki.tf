@@ -1,3 +1,4 @@
+
 resource "vault_mount" "pki_root" {
   provider              = vault.parent
   count                 = local.is_prod_or_dev == true ? 1 : 0
@@ -46,6 +47,7 @@ resource "vault_mount" "pki" {
   type = "pki"
 }
 
+#Intermediate
 resource "vault_pki_secret_backend_intermediate_cert_request" "this" {
   backend              = vault_mount.pki.path
   type                 = "internal"

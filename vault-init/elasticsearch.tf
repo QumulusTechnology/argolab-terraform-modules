@@ -1,4 +1,5 @@
 #Not supported by crossplane
+#Limititation: 
 resource "elasticstack_elasticsearch_security_role" "vault_management_role" {
   name    = "vault-management-role"
   cluster = ["manage_security"]
