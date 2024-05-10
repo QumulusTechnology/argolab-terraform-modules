@@ -20,7 +20,7 @@ provider "kubernetes" {
 }
 
 provider "vault" {
-  token           = jsondecode(data.aws_secretsmanager_secret.global-vault-token.secret_string)["vault_token"]
+  token           = jsondecode(data.aws_secretsmanager_secret.global-vault-token.secret_string)["vault-token"]
   address         = "https://vault.${local.parent_domain}"
   alias           = "parent"
   skip_tls_verify = true
