@@ -1,6 +1,6 @@
 
 resource "vault_mount" "pki_root" {
-  provider              = vault.parent
+  # provider              = vault.parent
   count                 = local.is_prod_or_dev == true ? 1 : 0
   path                  = "pki-root"
   type                  = "pki"
@@ -8,7 +8,7 @@ resource "vault_mount" "pki_root" {
 }
 
 resource "vault_pki_secret_backend_crl_config" "crl_config_root" {
-  provider = vault.parent
+  # provider = vault.parent
   count    = local.is_prod_or_dev == true ? 1 : 0
   backend  = vault_mount.pki_root[0].path
   expiry   = "72h"
@@ -16,7 +16,7 @@ resource "vault_pki_secret_backend_crl_config" "crl_config_root" {
 }
 
 resource "vault_pki_secret_backend_config_urls" "config_urls_root" {
-  provider                = vault.parent
+  # provider                = vault.parent
   count                   = local.is_prod_or_dev == true ? 1 : 0
   backend                 = vault_mount.pki_root[0].path
   issuing_certificates    = ["https://vault.${local.domain}/v1/pki-root/ca"]
@@ -24,7 +24,7 @@ resource "vault_pki_secret_backend_config_urls" "config_urls_root" {
 }
 
 resource "vault_pki_secret_backend_root_cert" "ca_root" {
-  provider             = vault.parent
+  # provider             = vault.parent
   count                = local.is_prod_or_dev == true ? 1 : 0
   backend              = vault_mount.pki_root[0].path
   type                 = "internal"
@@ -61,7 +61,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "this" {
 }
 
 resource "vault_pki_secret_backend_root_sign_intermediate" "this" {
-  provider             = vault.parent
+  # provider             = vault.parent
   backend              = "pki-root"
   ttl                  = "315360000"
   csr                  = vault_pki_secret_backend_intermediate_cert_request.this.csr
