@@ -18,6 +18,10 @@ variable "vault_token" {
   type = string
 }
 
+variable "vault_parent_token" {
+  type = string
+}
+
 variable "vault_init_response" {
   type = string
 }
