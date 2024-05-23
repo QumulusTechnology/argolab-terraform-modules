@@ -28,13 +28,13 @@ resource "vault_database_secrets_mount" "db" {
   #   allowed_roles  = ["*"]
   # }
 
-  # postgresql {
-  #   name           = "keycloak"
-  #   connection_url = "postgres://{{username}}:{{password}}@keycloak-db-rw.keycloak.svc:5432/keycloak"
-  #   username       = data.kubernetes_secret.keycloak_postgres_password.data["username"]
-  #   password       = data.kubernetes_secret.keycloak_postgres_password.data["password"]
-  #   allowed_roles  = ["*"]
-  # }
+  postgresql {
+    name           = "keycloak"
+    connection_url = "postgres://{{username}}:{{password}}@keycloak-db-rw.keycloak.svc:5432/keycloak"
+    username       = data.kubernetes_secret.keycloak_postgres_password.data["username"]
+    password       = data.kubernetes_secret.keycloak_postgres_password.data["password"]
+    allowed_roles  = ["*"]
+  }
 
   # postgresql {
   #   name           = "nexus"
