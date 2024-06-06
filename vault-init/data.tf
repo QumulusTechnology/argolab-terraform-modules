@@ -102,7 +102,7 @@ data "kubernetes_secret" "elastic_password" {
 data "terraform_remote_state" "argolab" {
   backend = "s3"
   config = {
-    bucket  = "qumulusglobaldevtest" #Make this dynamic
+    bucket  = "qumulusdev" #Make this dynamic
     key     = "refactor/argolab" #Make this dynamic
     region  = "eu-west-2" #Make this dynamic
   }
