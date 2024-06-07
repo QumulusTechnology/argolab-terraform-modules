@@ -14,6 +14,10 @@ variable "terraform_state_backend_key" {
   type = string
 }
 
+variable "branch" {
+  type = string
+}
+
 variable "vault_token" {
   type = string
 }

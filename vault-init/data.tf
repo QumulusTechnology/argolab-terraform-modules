@@ -103,7 +103,7 @@ data "terraform_remote_state" "argolab" {
   backend = "s3"
   config = {
     bucket  = "qumulusdev"
-    key     = "refactor/argolab"
+    key     = "${ var.branch }/argolab"
     region  = "eu-west-1"
   }
 }
