@@ -1,3 +1,13 @@
+resource "vault_mount" "kvv2-example" {
+  path        = "cluster"
+  type        = "kv-v2"
+  options = {
+    version = "2"
+    type    = "kv-v2"
+  }
+  description = "Cluster secrets"
+}
+
 resource "vault_policy" "external-secrets" {
   name = "external-secrets-access"
 
@@ -5,7 +15,7 @@ resource "vault_policy" "external-secrets" {
 path "kubernetes/creds/external-secrets" {
   capabilities = ["read"]
 }
-path "secret/*" {
+path "cluster/*" {
   capabilities = ["read", "create", "update", "delete"]
 }
 EOT
