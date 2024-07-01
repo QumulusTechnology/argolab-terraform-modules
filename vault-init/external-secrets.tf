@@ -3,6 +3,9 @@ resource "vault_policy" "external-secrets" {
 
   policy = <<EOT
 path "kubernetes/creds/external-secrets" {
+  capabilities = ["read"]
+}
+path "secret/*" {
   capabilities = ["read", "create", "update", "delete"]
 }
 EOT
