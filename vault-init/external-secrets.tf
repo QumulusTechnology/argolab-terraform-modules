@@ -2,7 +2,7 @@ resource "vault_policy" "external-secrets" {
   name = "external-secrets-access"
 
   policy = <<EOT
-path "${vault_azure_secret_backend.this.path}/creds/${vault_azure_secret_backend_role.external-secrets.role}" {
+path "${vault_kubernetes_auth_backend_role.external-secrets.path}/creds/${vault_azure_secret_backend_role.external-secrets.role}" {
   capabilities = ["read", "create", "update", "delete"]
 }
 EOT
@@ -14,5 +14,5 @@ resource "vault_kubernetes_auth_backend_role" "external-secrets" {
   bound_service_account_names      = ["external-secrets-credentials"]
   bound_service_account_namespaces = ["external-secrets"]
   token_ttl                        = 31536000
-  token_policies                   = ["external-secrets-azure-access"]
+  token_policies                   = ["external-secrets-access"]
 }
