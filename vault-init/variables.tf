@@ -18,6 +18,10 @@ variable "branch" {
   type = string
 }
 
+variable "environment" {
+  type = string
+}
+
 variable "vault_token" {
   type = string
 }
