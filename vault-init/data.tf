@@ -102,7 +102,7 @@ data "kubernetes_secret" "elastic_password" {
 data "terraform_remote_state" "argolab" {
   backend = "s3"
   config = {
-    bucket  = "qumulusdev"
+    bucket  = "qumulus${ var.environment }"
     key     = "${ var.branch }/argolab"
     region  = "eu-west-1"
   }
