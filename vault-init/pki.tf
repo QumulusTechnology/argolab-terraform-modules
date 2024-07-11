@@ -9,10 +9,10 @@ resource "vault_mount" "pki_root" {
 
 resource "vault_pki_secret_backend_crl_config" "crl_config_root" {
   # provider = vault.parent
-  count    = local.is_prod_or_dev == true ? 1 : 0
-  backend  = vault_mount.pki_root[0].path
-  expiry   = "72h"
-  disable  = false
+  count   = local.is_prod_or_dev == true ? 1 : 0
+  backend = vault_mount.pki_root[0].path
+  expiry  = "72h"
+  disable = false
 }
 
 resource "vault_pki_secret_backend_config_urls" "config_urls_root" {
@@ -93,8 +93,4 @@ resource "vault_pki_secret_backend_config_urls" "config_urls" {
 resource "vault_pki_secret_backend_intermediate_set_signed" "this" {
   backend     = vault_mount.pki.path
   certificate = vault_pki_secret_backend_root_sign_intermediate.this.certificate
-
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/delete_cluster_issuer.sh ${data.terraform_remote_state.argolab.outputs.kube_host} ${base64encode(data.terraform_remote_state.argolab.outputs.kube_client_certificate)} ${base64encode(data.terraform_remote_state.argolab.outputs.kube_client_key)} ${base64encode(data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate)}"
-  }
 }

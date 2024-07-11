@@ -11,25 +11,10 @@
 ## status: true if vault is ready, false if not
 ## skip_tls_verify which is just used to ensure the vault provider waits for vault to be ready before trying to connect to it.
 
-HOST=$1
-
-CLIENT_CERTIFICATE_FILE=$(mktemp -p /dev/shm/)
-echo $2 | base64 -d > $CLIENT_CERTIFICATE_FILE
-
-CLIENT_KEY_FILE=$(mktemp -p /dev/shm/)
-echo $3 | base64 -d > $CLIENT_KEY_FILE
-
-CLUSTER_CA_CERTIFICATE_FILE=$(mktemp -p /dev/shm/)
-echo $4 | base64 -d > $CLUSTER_CA_CERTIFICATE_FILE
-
-NULL_KUBECONFIG=$(mktemp -p /dev/shm/)
-
-touch $NULL_KUBECONFIG
-
 n=0
 until [ "$n" -ge 6 ]
 do
-   kubectl --kubeconfig $NULL_KUBECONFIG --server $HOST --client-certificate $CLIENT_CERTIFICATE_FILE --client-key $CLIENT_KEY_FILE --certificate-authority $CLUSTER_CA_CERTIFICATE_FILE -n vault wait --for=condition=Ready pod/vault-0 --timeout=600s &> /dev/null
+   kubectl -n vault wait --for=condition=Ready pod/vault-0 --timeout=600s &> /dev/null
    RETVAL=$?
    if [ $RETVAL -eq 0 ]; then
       break
@@ -37,11 +22,6 @@ do
    n=$((n+1))
    sleep 15
 done
-
-rm -f $CLIENT_CERTIFICATE_FILE
-rm -f $CLIENT_KEY_FILE
-rm -f $CLUSTER_CA_CERTIFICATE_FILE
-rm -f $NULL_KUBECONFIG
 
 if [ $RETVAL -ne 0 ]; then
   jq -n \

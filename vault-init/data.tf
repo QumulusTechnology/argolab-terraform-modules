@@ -71,49 +71,45 @@ data "kubernetes_secret" "elastic_password" {
   }
 }
 
-# data "vault_identity_group" "vault_admins" {
-#   group_name = "Vault Admins"
-#   depends_on = [
-#     module.vault_azure_ad_groups
-#   ]
-# }
+data "vault_identity_group" "vault_admins" {
+  group_name = "Vault Admins"
+  depends_on = [
+    module.vault_azure_ad_groups
+  ]
+}
 
-# data "vault_identity_group" "engineering" {
-#   group_name = "Engineering"
-#   depends_on = [
-#     module.vault_azure_ad_groups
-#   ]
-# }
+data "vault_identity_group" "engineering" {
+  group_name = "Engineering"
+  depends_on = [
+    module.vault_azure_ad_groups
+  ]
+}
 
-# data "vault_identity_group" "devops" {
-#   group_name = "DevOps"
-#   depends_on = [
-#     module.vault_azure_ad_groups
-#   ]
-# }
+data "vault_identity_group" "devops" {
+  group_name = "DevOps"
+  depends_on = [
+    module.vault_azure_ad_groups
+  ]
+}
 
-# data "kubernetes_secret" "azure-sso-credentials" {
-#   metadata {
-#     name      = "azure-sso-credentials"
-#     namespace = "vault"
-#   }
-# }
+data "kubernetes_secret" "azure-sso-credentials" {
+  metadata {
+    name      = "azure-sso-credentials"
+    namespace = "vault"
+  }
+}
 
 data "terraform_remote_state" "argolab" {
   backend = "s3"
   config = {
-    bucket  = "qumulus${ var.environment }"
-    key     = "${ var.branch }/argolab"
-    region  = "eu-west-1"
+    bucket = "qumulus-terraform-state-backend-${var.environment}"
+    key    = "${var.branch}/argolab"
+    region = "us-east-1"
   }
 }
 
 data "external" "vault_init" {
   program = [
-    "${path.module}/scripts/wait_for_vault.sh",
-    data.terraform_remote_state.argolab.outputs.kube_host,
-    base64encode(data.terraform_remote_state.argolab.outputs.kube_client_certificate),
-    base64encode(data.terraform_remote_state.argolab.outputs.kube_client_key),
-    base64encode(data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate),
+    "${path.module}/scripts/wait_for_vault.sh"
   ]
 }

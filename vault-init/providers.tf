@@ -1,22 +1,21 @@
-# provider "azurerm" {
-#   subscription_id = local.subscription_id
-#   tenant_id       = local.tenant_id
-#   features {}
-# }
 
-provider "aws" {
-  region     = "eu-west-1"
+provider "azurerm" {
+  client_id       = data.terraform_remote_state.argolab.outputs.vault_init_client_id
+  client_secret   = data.terraform_remote_state.argolab.outputs.vault_init_client_secret
+  subscription_id = local.subscription_id
+  tenant_id       = local.tenant_id
+  features {}
 }
 
-# provider "azuread" {
-#   tenant_id = local.tenant_id
-# }
+provider "azuread" {
+  client_id       = data.terraform_remote_state.argolab.outputs.vault_init_client_id
+  client_secret   = data.terraform_remote_state.argolab.outputs.vault_init_client_secret
+  tenant_id = local.tenant_id
 
-provider "kubernetes" {
-  host                   = data.terraform_remote_state.argolab.outputs.kube_host
-  client_certificate     = data.terraform_remote_state.argolab.outputs.kube_client_certificate
-  client_key             = data.terraform_remote_state.argolab.outputs.kube_client_key
-  cluster_ca_certificate = data.terraform_remote_state.argolab.outputs.kube_cluster_ca_certificate
+}
+
+provider "aws" {
+  region = "us-east-1"
 }
 
 provider "vault" {
@@ -27,11 +26,8 @@ provider "vault" {
 }
 
 provider "vault" {
-  address         = "http://vault-internal.vault:8200"
-  token           = var.vault_token
   skip_tls_verify = true
 }
-
 
 provider "elasticstack" {
   elasticsearch {

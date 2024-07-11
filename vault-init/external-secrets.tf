@@ -1,6 +1,6 @@
 resource "vault_mount" "kvv2-example" {
-  path        = "cluster"
-  type        = "kv-v2"
+  path = "cluster"
+  type = "kv-v2"
   options = {
     version = "2"
     type    = "kv-v2"
