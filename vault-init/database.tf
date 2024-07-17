@@ -60,6 +60,14 @@ resource "vault_database_secrets_mount" "db" {
     allowed_roles  = ["*"]
   }
 
+  postgresql {
+    name           = "zabbix"
+    connection_url = "postgres://{{username}}:{{password}}@zabbix-db-rw.zabbix.svc:5432/zabbix"
+    username       = data.kubernetes_secret.zabbix_postgres_password.data["username"]
+    password       = data.kubernetes_secret.zabbix_postgres_password.data["password"]
+    allowed_roles  = ["*"]
+  }
+
   # postgresql {
   #   name           = "temporal"
   #   connection_url = "postgres://{{username}}:{{password}}@temporal-db-rw.temporal.svc:5432/temporal"

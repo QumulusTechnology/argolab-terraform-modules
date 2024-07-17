@@ -16,6 +16,8 @@ provider "azuread" {
 
 provider "aws" {
   region = "us-east-1"
+  access_key = data.terraform_remote_state.argolab.outputs.vault_iam_user_id
+  secret_key = data.terraform_remote_state.argolab.outputs.vault_iam_user_secret
 }
 
 provider "vault" {

@@ -15,6 +15,13 @@
 #   secret_id     = data.aws_secretsmanager_secret.global_vault_token_secret.id
 # }
 
+data "kubernetes_secret" "zabbix_postgres_password" {
+  metadata {
+    name      = "zabbix-db-superuser"
+    namespace = "zabbix"
+  }
+}
+
 data "kubernetes_secret" "harbor_postgres_password" {
   metadata {
     name      = "harbor-db-superuser"
