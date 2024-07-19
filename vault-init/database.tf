@@ -44,13 +44,13 @@ resource "vault_database_secrets_mount" "db" {
   #   allowed_roles  = ["*"]
   # }
 
-  # postgresql {
-  #   name           = "pwpush"
-  #   connection_url = "postgres://{{username}}:{{password}}@pwpush-db-rw.pwpush.svc:5432/pwpush"
-  #   username       = data.kubernetes_secret.pwpush_postgres_password.data["username"]
-  #   password       = data.kubernetes_secret.pwpush_postgres_password.data["password"]
-  #   allowed_roles  = ["*"]
-  # }
+  postgresql {
+    name           = "pwpush"
+    connection_url = "postgres://{{username}}:{{password}}@pwpush-db-rw.pwpush.svc:5432/pwpush"
+    username       = data.kubernetes_secret.pwpush_postgres_password.data["username"]
+    password       = data.kubernetes_secret.pwpush_postgres_password.data["password"]
+    allowed_roles  = ["*"]
+  }
 
   postgresql {
     name           = "semaphore"
