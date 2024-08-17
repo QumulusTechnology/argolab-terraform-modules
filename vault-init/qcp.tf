@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "qcp_configs" {
-  bucket = "qcp-configs"
+  bucket = "qcp-configs-${var.environment}"
   tags = {
     Name = "qcp-configs"
   }
@@ -26,7 +26,7 @@ resource "aws_s3_bucket_acl" "qcp_configs" {
 }
 
 resource "aws_s3_bucket" "qcp_configs_log_bucket" {
-  bucket = "qcp-configs-logs"
+  bucket = "qcp-configs-logs-${var.environment}"
   tags = {
     Name = "qcp-configs-logs"
   }
