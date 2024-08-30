@@ -35,7 +35,7 @@ provider "elasticstack" {
   elasticsearch {
     username  = "elastic"
     password  = data.kubernetes_secret.elastic_password.data["elastic"]
-    endpoints = ["https://elastic-search-es-http.elastic.svc:9200"]
+    endpoints = ["https://elasticsearch-es-http.elastic.svc:9200"]
     insecure  = true
   }
 }
