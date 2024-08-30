@@ -73,7 +73,7 @@ data "kubernetes_secret" "temporal_postgres_password" {
 
 data "kubernetes_secret" "elastic_password" {
   metadata {
-    name      = "elastic-search-es-elastic-user"
+    name      = "elasticsearch-es-elastic-user"
     namespace = "elastic"
   }
 }
