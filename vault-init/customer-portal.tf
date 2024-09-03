@@ -34,7 +34,7 @@ resource "vault_kubernetes_auth_backend_role" "customerportal" {
   backend                          = vault_auth_backend.kubernetes.path
   role_name                        = "customerportal-database-access"
   bound_service_account_names      = ["customerportal-database-credentials"]
-  bound_service_account_namespaces = ["customerportal"]
+  bound_service_account_namespaces = ["customer-portal"]
   token_ttl                        = 31536000
   token_policies                   = ["customerportal-database-access"]
 }

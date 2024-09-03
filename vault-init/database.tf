@@ -70,7 +70,7 @@ resource "vault_database_secrets_mount" "db" {
 
   postgresql {
     name           = "customerportal"
-    connection_url = "postgres://{{username}}:{{password}}@customerportal-db-rw.customerportal.svc:5432/customerportal"
+    connection_url = "postgres://{{username}}:{{password}}@customerportal-db-rw.customer-portal.svc:5432/customerportal"
     username       = data.kubernetes_secret.customer_portal_postgres_password.data["username"]
     password       = data.kubernetes_secret.customer_portal_postgres_password.data["password"]
     allowed_roles  = ["*"]
