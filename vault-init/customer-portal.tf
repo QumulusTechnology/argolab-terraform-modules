@@ -9,14 +9,14 @@ resource "vault_database_secret_backend_role" "customer-portal_postgres" {
   creation_statements = [
     "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' INHERIT;",
     "GRANT customer-portal TO \"{{name}}\";",
-    "GRANT ALL ON DATABASE customer-portal TO customer-portal;",
+    "GRANT ALL ON DATABASE customer\-portal TO customer\-portal;",
     "GRANT ALL PRIVILEGES ON SCHEMA PUBLIC TO customer-portal;",
-    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO customer-portal;",
-    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO customer-portal;",
-    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO customer-portal;",
+    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO customer\-portal;",
+    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO customer\-portal;",
+    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO customer\-portal;",
   ]
   revocation_statements = [
-    "REASSIGN OWNED BY \"{{name}}\" TO customer-portal;",
+    "REASSIGN OWNED BY \"{{name}}\" TO customer\-portal;",
     "DROP OWNED BY \"{{name}}\";"
   ]
 }
