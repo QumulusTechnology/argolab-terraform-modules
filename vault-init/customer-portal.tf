@@ -1,40 +1,40 @@
 
 
-resource "vault_database_secret_backend_role" "customer-portal_postgres" {
+resource "vault_database_secret_backend_role" "customerportal_postgres" {
   backend     = vault_database_secrets_mount.db.path
-  db_name     = "customer-portal"
-  name        = "customer-portal"
+  db_name     = "customerportal"
+  name        = "customerportal"
   default_ttl = 31536000
   max_ttl     = 31536000
   creation_statements = [
     "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' INHERIT;",
-    "GRANT \"customer-portal\" TO \"{{name}}\";",
-    "GRANT ALL ON DATABASE \"customer-portal\" TO \"customer-portal\";",
-    "GRANT ALL PRIVILEGES ON SCHEMA PUBLIC TO customer-portal;",
-    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO \"customer-portal\";",
-    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO \"customer-portal\";",
-    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO \"customer-portal\";",
+    "GRANT \"customerportal\" TO \"{{name}}\";",
+    "GRANT ALL ON DATABASE \"customerportal\" TO \"customerportal\";",
+    "GRANT ALL PRIVILEGES ON SCHEMA PUBLIC TO customerportal;",
+    "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA PUBLIC TO \"customerportal\";",
+    "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA PUBLIC TO \"customerportal\";",
+    "GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA PUBLIC TO \"customerportal\";",
   ]
   revocation_statements = [
-    "REASSIGN OWNED BY \"{{name}}\" TO \"customer-portal\";",
+    "REASSIGN OWNED BY \"{{name}}\" TO \"customerportal\";",
     "DROP OWNED BY \"{{name}}\";"
   ]
 }
 
-resource "vault_policy" "customer-portal_database_access" {
-  name   = "customer-portal-database-access"
+resource "vault_policy" "customerportal_database_access" {
+  name   = "customerportal-database-access"
   policy = <<EOT
-path "database/creds/customer-portal" {
+path "database/creds/customerportal" {
   capabilities = [ "read" ]
 }
 EOT
 }
 
-resource "vault_kubernetes_auth_backend_role" "customer-portal" {
+resource "vault_kubernetes_auth_backend_role" "customerportal" {
   backend                          = vault_auth_backend.kubernetes.path
-  role_name                        = "customer-portal-database-access"
-  bound_service_account_names      = ["customer-portal-database-credentials"]
-  bound_service_account_namespaces = ["customer-portal"]
+  role_name                        = "customerportal-database-access"
+  bound_service_account_names      = ["customerportal-database-credentials"]
+  bound_service_account_namespaces = ["customerportal"]
   token_ttl                        = 31536000
-  token_policies                   = ["customer-portal-database-access"]
+  token_policies                   = ["customerportal-database-access"]
 }

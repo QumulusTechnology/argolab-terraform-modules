@@ -31,8 +31,8 @@ data "kubernetes_secret" "harbor_postgres_password" {
 
 data "kubernetes_secret" "customer_portal_postgres_password" {
   metadata {
-    name      = "customer-portal-db-superuser"
-    namespace = "customer-portal"
+    name      = "customerportal-db-superuser"
+    namespace = "customerportal"
   }
 }
 
