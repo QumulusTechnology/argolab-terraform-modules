@@ -71,8 +71,8 @@ resource "vault_database_secrets_mount" "db" {
   postgresql {
     name           = "ustomer-portal"
     connection_url = "postgres://{{username}}:{{password}}@customer-portal-db-rw.zabbix.svc:5432/zabbix"
-    username       = data.kubernetes_secret.customer-portal_postgres_password.data["username"]
-    password       = data.kubernetes_secret.ustomer-portal_postgres_password.data["password"]
+    username       = data.kubernetes_secret.customer_portal_postgres_password.data["username"]
+    password       = data.kubernetes_secret.customer_portal_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 
