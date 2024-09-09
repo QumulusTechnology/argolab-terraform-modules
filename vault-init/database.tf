@@ -76,14 +76,6 @@ resource "vault_database_secrets_mount" "db" {
     allowed_roles  = ["*"]
   }
 
-  postgresql {
-    name           = "customerportal"
-    connection_url = "postgres://{{username}}:{{password}}@customerportal-db-rw.customer-portal.svc:5432/customerportal"
-    username       = data.kubernetes_secret.customer_portal_postgres_password.data["username"]
-    password       = data.kubernetes_secret.customer_portal_postgres_password.data["password"]
-    allowed_roles  = ["*"]
-  }
-
   # postgresql {
   #   name           = "temporal"
   #   connection_url = "postgres://{{username}}:{{password}}@temporal-db-rw.temporal.svc:5432/temporal"

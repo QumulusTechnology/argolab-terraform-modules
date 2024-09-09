@@ -22,24 +22,10 @@ data "kubernetes_secret" "zabbix_postgres_password" {
   }
 }
 
-data "kubernetes_secret" "zabbix3_postgres_password" {
-  metadata {
-    name      = "zabbix3-db-superuser"
-    namespace = "zabbix3"
-  }
-}
-
 data "kubernetes_secret" "harbor_postgres_password" {
   metadata {
     name      = "harbor-db-superuser"
     namespace = "harbor"
-  }
-}
-
-data "kubernetes_secret" "customer_portal_postgres_password" {
-  metadata {
-    name      = "customerportal-db-superuser"
-    namespace = "customer-portal"
   }
 }
 
