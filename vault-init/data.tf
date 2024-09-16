@@ -22,12 +22,12 @@ data "kubernetes_secret" "zabbix_postgres_password" {
   }
 }
 
-data "kubernetes_secret" "harbor_postgres_password" {
-  metadata {
-    name      = "harbor-db-superuser"
-    namespace = "harbor"
-  }
-}
+# data "kubernetes_secret" "harbor_postgres_password" {
+#   metadata {
+#     name      = "harbor-db-superuser"
+#     namespace = "harbor"
+#   }
+# }
 
 data "kubernetes_secret" "kamaji_postgres_password" {
   metadata {
