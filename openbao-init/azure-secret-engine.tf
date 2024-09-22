@@ -4,8 +4,8 @@ resource "vault_azure_secret_backend" "this" {
   path                    = "azure"
   subscription_id         = local.subscription_id
   tenant_id               = local.tenant_id
-  client_id               = data.terraform_remote_state.argolab.outputs.vault_secret_engine_client_id
-  client_secret           = data.terraform_remote_state.argolab.outputs.vault_secret_engine_client_secret
+  client_id               = data.terraform_remote_state.argolab.outputs.openbao_secret_engine_client_id
+  client_secret           = data.terraform_remote_state.argolab.outputs.openbao_secret_engine_client_secret
   environment             = "AzurePublicCloud"
 
 }

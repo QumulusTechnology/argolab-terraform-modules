@@ -79,7 +79,7 @@ data "kubernetes_secret" "elastic_password" {
 }
 
 data "vault_identity_group" "vault_admins" {
-  group_name = "Vault Admins"
+  group_name = "OpenBao Admins"
   depends_on = [
     module.vault_azure_ad_groups
   ]

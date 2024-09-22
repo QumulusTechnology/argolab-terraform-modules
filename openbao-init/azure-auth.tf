@@ -5,8 +5,8 @@ resource "vault_auth_backend" "this" {
 resource "vault_azure_auth_backend_config" "this" {
   backend       = vault_auth_backend.this.path
   tenant_id     = local.tenant_id
-  client_id     = data.terraform_remote_state.argolab.outputs.vault_sso_client_id
-  client_secret = data.terraform_remote_state.argolab.outputs.vault_sso_client_secret
+  client_id     = data.terraform_remote_state.argolab.outputs.openbao_sso_client_id
+  client_secret = data.terraform_remote_state.argolab.outputs.openbao_sso_client_secret
   resource      = "https://vault.${local.domain}"
 }
 
@@ -17,8 +17,8 @@ resource "vault_jwt_auth_backend" "this" {
   default_role = "azuread-sso"
 
   oidc_discovery_url = "https://login.microsoftonline.com/${local.tenant_id}/v2.0"
-  oidc_client_id     =  data.terraform_remote_state.argolab.outputs.vault_sso_client_id
-  oidc_client_secret = data.terraform_remote_state.argolab.outputs.vault_sso_client_secret
+  oidc_client_id     =  data.terraform_remote_state.argolab.outputs.openbao_sso_client_id
+  oidc_client_secret = data.terraform_remote_state.argolab.outputs.openbao_sso_client_secret
 }
 
 resource "vault_jwt_auth_backend_role" "azuread-sso" {

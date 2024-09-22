@@ -26,7 +26,7 @@ variable "environment" {
 #   type = string
 # }
 
-variable "vault_parent_token" {
+variable "openbao_parent_token" {
   type = string
 }
 

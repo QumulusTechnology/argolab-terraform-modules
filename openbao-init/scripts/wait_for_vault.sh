@@ -14,7 +14,7 @@
 n=0
 until [ "$n" -ge 6 ]
 do
-   kubectl -n vault wait --for=condition=Ready pod/vault-0 --timeout=600s &> /dev/null
+   kubectl -n openbao wait --for=condition=Ready pod/openbao-0 --timeout=600s &> /dev/null
    RETVAL=$?
    if [ $RETVAL -eq 0 ]; then
       break
