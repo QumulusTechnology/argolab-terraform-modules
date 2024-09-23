@@ -1,19 +1,3 @@
-# data "azurerm_key_vault" "global" {
-#   name                = local.keyvault_name_global
-#   resource_group_name = "global"
-# }
-
-# data "azurerm_key_vault" "argo" {
-#   name                = local.keyvault_name_argo
-#   resource_group_name = local.resource_group_name
-# }
-
-# data "aws_secretsmanager_secret" "global_vault_token_secret" {
-#   name = "/dev/global/vault-token"
-# }
-# data "aws_secretsmanager_secret_version" "global_vault_token_secret_string" {
-#   secret_id     = data.aws_secretsmanager_secret.global_vault_token_secret.id
-# }
 
 data "kubernetes_secret" "zabbix_postgres_password" {
   metadata {
@@ -75,34 +59,6 @@ data "kubernetes_secret" "elastic_password" {
   metadata {
     name      = "elasticsearch-es-elastic-user"
     namespace = "elastic"
-  }
-}
-
-data "vault_identity_group" "vault_admins" {
-  group_name = "Vault Admins"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
-
-data "vault_identity_group" "engineering" {
-  group_name = "Engineering"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
-
-data "vault_identity_group" "devops" {
-  group_name = "DevOps"
-  depends_on = [
-    module.vault_azure_ad_groups
-  ]
-}
-
-data "kubernetes_secret" "azure-sso-credentials" {
-  metadata {
-    name      = "azure-sso-credentials"
-    namespace = "vault"
   }
 }
 
