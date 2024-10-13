@@ -52,13 +52,13 @@ resource "vault_database_secrets_mount" "db" {
     allowed_roles  = ["*"]
   }
 
-  postgresql {
-    name           = "semaphore"
-    connection_url = "postgres://{{username}}:{{password}}@semaphore-db-rw.semaphore.svc:5432/semaphore"
-    username       = data.kubernetes_secret.semaphore_postgres_password.data["username"]
-    password       = data.kubernetes_secret.semaphore_postgres_password.data["password"]
-    allowed_roles  = ["*"]
-  }
+  # postgresql {
+  #   name           = "semaphore"
+  #   connection_url = "postgres://{{username}}:{{password}}@semaphore-db-rw.semaphore.svc:5432/semaphore"
+  #   username       = data.kubernetes_secret.semaphore_postgres_password.data["username"]
+  #   password       = data.kubernetes_secret.semaphore_postgres_password.data["password"]
+  #   allowed_roles  = ["*"]
+  # }
 
   postgresql {
     name           = "zabbix"

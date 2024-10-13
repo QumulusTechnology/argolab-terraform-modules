@@ -41,12 +41,12 @@ data "kubernetes_secret" "pwpush_postgres_password" {
   }
 }
 
-data "kubernetes_secret" "semaphore_postgres_password" {
-  metadata {
-    name      = "semaphore-db-superuser"
-    namespace = "semaphore"
-  }
-}
+# data "kubernetes_secret" "semaphore_postgres_password" {
+#   metadata {
+#     name      = "semaphore-db-superuser"
+#     namespace = "semaphore"
+#   }
+# }
 
 data "kubernetes_secret" "temporal_postgres_password" {
   metadata {
