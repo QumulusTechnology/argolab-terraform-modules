@@ -2,15 +2,15 @@ resource "vault_database_secrets_mount" "db" {
   path = "database"
 
   ### Note these should be in alphabetical order to prevent terraform from trying to reorder the databases by each apply
-  elasticsearch {
-    name              = "elastic"
-    url               = "https://elasticsearch-es-http.elastic.svc:9200"
-    username          = elasticstack_elasticsearch_security_user.vault_user.username
-    password          = random_password.vault_elasticsearch_password.result
-    allowed_roles     = ["*"]
-    insecure          = true
-    verify_connection = false
-  }
+  # elasticsearch {
+  #   name              = "elastic"
+  #   url               = "https://elasticsearch-es-http.elastic.svc:9200"
+  #   username          = elasticstack_elasticsearch_security_user.vault_user.username
+  #   password          = random_password.vault_elasticsearch_password.result
+  #   allowed_roles     = ["*"]
+  #   insecure          = true
+  #   verify_connection = false
+  # }
 
   postgresql {
     name           = "harbor"

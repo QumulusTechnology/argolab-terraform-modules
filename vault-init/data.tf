@@ -55,12 +55,12 @@ data "kubernetes_secret" "temporal_postgres_password" {
   }
 }
 
-data "kubernetes_secret" "elastic_password" {
-  metadata {
-    name      = "elasticsearch-es-elastic-user"
-    namespace = "elastic"
-  }
-}
+# data "kubernetes_secret" "elastic_password" {
+#   metadata {
+#     name      = "elasticsearch-es-elastic-user"
+#     namespace = "elastic"
+#   }
+# }
 
 data "terraform_remote_state" "argolab" {
   backend = "s3"
