@@ -2,15 +2,15 @@ resource "vault_database_secrets_mount" "db" {
   path = "database"
 
   ### Note these should be in alphabetical order to prevent terraform from trying to reorder the databases by each apply
-  elasticsearch {
-    name              = "elastic"
-    url               = "https://elasticsearch-es-http.elastic.svc:9200"
-    username          = elasticstack_elasticsearch_security_user.vault_user.username
-    password          = random_password.vault_elasticsearch_password.result
-    allowed_roles     = ["*"]
-    insecure          = true
-    verify_connection = false
-  }
+  # elasticsearch {
+  #   name              = "elastic"
+  #   url               = "https://elasticsearch-es-http.elastic.svc:9200"
+  #   username          = elasticstack_elasticsearch_security_user.vault_user.username
+  #   password          = random_password.vault_elasticsearch_password.result
+  #   allowed_roles     = ["*"]
+  #   insecure          = true
+  #   verify_connection = false
+  # }
 
   postgresql {
     name           = "harbor"
@@ -52,35 +52,19 @@ resource "vault_database_secrets_mount" "db" {
     allowed_roles  = ["*"]
   }
 
-  postgresql {
-    name           = "semaphore"
-    connection_url = "postgres://{{username}}:{{password}}@semaphore-db-rw.semaphore.svc:5432/semaphore"
-    username       = data.kubernetes_secret.semaphore_postgres_password.data["username"]
-    password       = data.kubernetes_secret.semaphore_postgres_password.data["password"]
-    allowed_roles  = ["*"]
-  }
+  # postgresql {
+  #   name           = "semaphore"
+  #   connection_url = "postgres://{{username}}:{{password}}@semaphore-db-rw.semaphore.svc:5432/semaphore"
+  #   username       = data.kubernetes_secret.semaphore_postgres_password.data["username"]
+  #   password       = data.kubernetes_secret.semaphore_postgres_password.data["password"]
+  #   allowed_roles  = ["*"]
+  # }
 
   postgresql {
     name           = "zabbix"
     connection_url = "postgres://{{username}}:{{password}}@zabbix-db-rw.zabbix.svc:5432/zabbix"
     username       = data.kubernetes_secret.zabbix_postgres_password.data["username"]
     password       = data.kubernetes_secret.zabbix_postgres_password.data["password"]
-    allowed_roles  = ["*"]
-  }
-
-  postgresql {
-    name           = "zabbix3"
-    connection_url = "postgres://{{username}}:{{password}}@zabbix3-db-rw.zabbix3.svc:5432/zabbix3"
-    username       = data.kubernetes_secret.zabbix3_postgres_password.data["username"]
-    password       = data.kubernetes_secret.zabbix3_postgres_password.data["password"]
-    allowed_roles  = ["*"]
-  }
-
-  postgresql {
-    name           = "customerportal"
-    connection_url = "postgres://{{username}}:{{password}}@customerportal-db-rw.customer-portal.svc:5432/customerportal"
-    username       = data.kubernetes_secret.customer_portal_postgres_password.data["username"]
-    password       = data.kubernetes_secret.customer_portal_postgres_password.data["password"]
     allowed_roles  = ["*"]
   }
 
